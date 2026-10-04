@@ -31,6 +31,110 @@ body {
   font-size: 14px;
 }
 
+.maintenance-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  overflow: auto;
+  padding: 24px;
+  background:
+    radial-gradient(ellipse at 50% 42%, rgba(107, 116, 126, .12), transparent 48%),
+    #080909;
+}
+
+.maintenance-card {
+  width: min(100%, 560px);
+  padding: 52px 44px 40px;
+  border: 1px solid #292d31;
+  border-radius: 18px;
+  background: linear-gradient(145deg, rgba(20, 22, 24, .98), rgba(12, 13, 14, .98));
+  box-shadow: 0 28px 100px rgba(0, 0, 0, .55);
+  text-align: center;
+}
+
+.maintenance-indicator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+  height: 28px;
+  margin-bottom: 28px;
+}
+
+.maintenance-indicator span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #aeb5bc;
+  animation: maintenance-pulse 1.4s ease-in-out infinite;
+}
+
+.maintenance-indicator span:nth-child(2) {
+  animation-delay: .18s;
+}
+
+.maintenance-indicator span:nth-child(3) {
+  animation-delay: .36s;
+}
+
+.maintenance-eyebrow {
+  margin: 0 0 14px;
+  color: #8f969d;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .2em;
+}
+
+.maintenance-card h1 {
+  margin: 0;
+  color: #f0f1f2;
+  font-size: clamp(27px, 6vw, 38px);
+  line-height: 1.2;
+  letter-spacing: -.04em;
+}
+
+.maintenance-card > p:not(.maintenance-eyebrow) {
+  max-width: 390px;
+  margin: 18px auto 0;
+  color: #9a9fa5;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.maintenance-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 34px;
+  padding: 10px 14px;
+  border: 1px solid #282c30;
+  border-radius: 999px;
+  color: #aeb4ba;
+  background: rgba(255, 255, 255, .025);
+  font-size: 12px;
+}
+
+.maintenance-status span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #b4bcc3;
+  box-shadow: 0 0 12px rgba(180, 188, 195, .45);
+}
+
+@keyframes maintenance-pulse {
+  0%, 80%, 100% { opacity: .35; transform: scale(.8); }
+  40% { opacity: 1; transform: scale(1); }
+}
+
+@media (max-width: 480px) {
+  .maintenance-card {
+    padding: 42px 24px 32px;
+  }
+}
+
 button,
 input {
   font: inherit;

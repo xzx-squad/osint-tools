@@ -9,6 +9,20 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div class="maintenance-screen" role="alertdialog" aria-modal="true" aria-labelledby="maintenanceTitle" aria-describedby="maintenanceMessage">
+    <div class="maintenance-card">
+      <div class="maintenance-indicator" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <p class="maintenance-eyebrow">OSINT-TOOLS</p>
+      <h1 id="maintenanceTitle">Ведутся технические работы</h1>
+      <p id="maintenanceMessage">Скоро работа сайта возобновится. Спасибо за ваше терпение!</p>
+      <div class="maintenance-status"><span></span> Работаем над улучшением сайта</div>
+    </div>
+  </div>
+  <div class="site-content" inert aria-hidden="true">
   <header class="topbar">
     <div class="brand-wrap">
       <a class="brand" href="#">
@@ -76,6 +90,7 @@
     <span>Osint-Tools</span>
     <span>XZX SQUAD 2026</span>
   </footer>
+  </div>
 
   <script src="script.js?v=4"></script>
 </body>
