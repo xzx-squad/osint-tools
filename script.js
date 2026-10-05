@@ -1,11 +1,3 @@
-/*
-  ==========================================
-  OSINT CATALOG — ДАННЫЕ КАТАЛОГА
-  ==========================================
-  Чтобы добавить/изменить инструмент, редактируй
-  массив TOOLS ниже. Никакой базы данных не нужно.
-*/
-
 const TOOLS = [
   // Поиск и мониторинг
   {
@@ -13,56 +5,56 @@ const TOOLS = [
     name: "Google",
     url: "https://www.google.com/",
     icon: "G",
-    description: "Поисковая система"
+    description: "Поисковая система."
   },
   {
     category: "Поиск и мониторинг",
     name: "Yandex",
     url: "https://yandex.com/",
     icon: "Я",
-    description: "Поиск и веб-сервисы"
+    description: "Поиск и веб-сервисы."
   },
   {
     category: "Поиск и мониторинг",
     name: "DuckDuckGo",
     url: "https://duckduckgo.com/",
     icon: "D",
-    description: "Поиск"
+    description: "Поиск."
   },
   {
     category: "Поиск и мониторинг",
     name: "Brave Search",
     url: "https://search.brave.com/",
     icon: "B",
-    description: "Независимый поиск"
+    description: "Независимый поиск."
   },
   {
     category: "Поиск и мониторинг",
     name: "SearXNG",
     url: "https://searx.space/",
     icon: "S",
-    description: "Метапоиск"
+    description: "Метапоиск."
   },
   {
     category: "Поиск и мониторинг",
     name: "Startpage",
     url: "https://www.startpage.com/",
     icon: "S",
-    description: "Приватный поиск"
+    description: "Приватный поиск."
   },
   {
     category: "Поиск и мониторинг",
     name: "Google Scholar",
     url: "https://scholar.google.com/",
     icon: "G",
-    description: "Научный поиск"
+    description: "Научный поиск."
   },
   {
     category: "Поиск и мониторинг",
     name: "arXiv",
     url: "https://arxiv.org/",
     icon: "X",
-    description: "Научные публикации"
+    description: "Научные публикации."
   },
 
   // Люди и контакты
@@ -71,60 +63,109 @@ const TOOLS = [
     name: "Hunter",
     url: "https://hunter.io/",
     icon: "H",
-    description: "Поиск рабочих email"
+    description: "Поиск рабочих email-адресов."
   },
   {
     category: "Люди и контакты",
     name: "Have I Been Pwned",
     url: "https://haveibeenpwned.com/",
     icon: "P",
-    description: "Проверка утечек аккаунтов"
+    description: "Проверка, появлялись ли аккаунты в утечках данных."
   },
-    {
+  {
     category: "Люди и контакты",
     name: "Truecaller",
     url: "https://www.truecaller.com/",
     icon: "P",
-    description: "Проверка базы данных номеров"
+    description: "База данных для поиска номеров телефонов."
   },
-
+    {
+    category: "Люди и контакты",
+    name: "SMSC HLR Lookup",
+    url: "https://smsc.ru/testhlr/",
+    icon: "P",
+    description: "Проверка номера телефона и его оператора."
+  },
+    {
+    category: "Люди и контакты",
+    name: "E-Caller",
+    url: "https://www.e-caller.com/",
+    icon: "P",
+    description: "Проверка номера телефона и его оператора"
+  },
+   {
+    category: "Люди и контакты",
+    name: "HackCheck",
+    url: "https://hackcheck.io/",
+    icon: "P",
+    description: "Проверка утечек данных и поиск информации о пользователях."
+  },
+   {
+    category: "Люди и контакты",
+    name: "Dehashed",
+    url: "https://www.dehashed.com/",
+    icon: "P",
+    description: "Проверка утечек данных и поиск информации о пользователях."
+  },
+   {
+    category: "Люди и контакты",
+    name: "OSINTKit",
+    url: "https://osintkit.net/",
+    icon: "P",
+    description: "Проверка утечек данных и поиск информации о русских жителях, совершивших преступления в Украине."
+  },
+  
   // Соцсети и мессенджеры
   {
     category: "Соцсети и мессенджеры",
-    name: "Telegram",
-    url: "https://web.telegram.org/",
+    name: "TGCollector",
+    url: "https://www.tgcollector.com/",
     icon: "T",
-    description: "Мессенджер"
+    description: "Сбор данных из Telegram."
   },
   {
     category: "Соцсети и мессенджеры",
-    name: "Reddit",
-    url: "https://www.reddit.com/",
+    name: "TgramSearch",
+    url: "https://tgramsearch.com/",
     icon: "R",
-    description: "Социальная платформа"
+    description: "Удобный поиск по Telegram-каналам и группам."
+  },
+  {
+    category: "Соцсети и мессенджеры",
+    name: "Telescan",
+    url: "https://github.com/pielco11/telescan",
+    icon: "T",
+    description: "Инструмент для анализа Telegram-каналов и групп."
+  },
+    {
+    category: "Соцсети и мессенджеры",
+    name: "Signal",
+    url: "https://signal.org/",
+    icon: "S",
+    description: "Мессенджер с открытым исходным кодом и сквозным шифрованием."
   },
 
   // Домены, сеть и угрозы
   {
     category: "Домены, сеть и угрозы",
-    name: "SecurityTrails",
-    url: "https://securitytrails.com/",
-    icon: "S",
-    description: "DNS и доменная информация"
+    name: "who.is",
+    url: "https://who.is/",
+    icon: "W",
+    description: "Информация о владельцах доменов и IP-адресах."
   },
   {
     category: "Домены, сеть и угрозы",
-    name: "crt.sh",
-    url: "https://crt.sh/",
-    icon: "C",
-    description: "Certificate Transparency"
+    name: "onion lookup",
+    url: "https://onion.ail-project.org/",
+    icon: "O",
+    description: "Поиск информации о .onion доменах и их владельцах."
   },
   {
     category: "Домены, сеть и угрозы",
     name: "VirusTotal",
     url: "https://www.virustotal.com/",
     icon: "V",
-    description: "Анализ файлов, URL и доменов"
+    description: "Анализ файлов, URL и доменов."
   },
 
   // Гео и объекты
@@ -133,14 +174,42 @@ const TOOLS = [
     name: "OpenStreetMap",
     url: "https://www.openstreetmap.org/",
     icon: "M",
-    description: "Открытая карта"
+    description: "Открытая карта."
   },
   {
     category: "Гео и объекты",
     name: "Google Maps",
     url: "https://maps.google.com/",
     icon: "M",
-    description: "Карты и объекты"
+    description: "Карта и спутниковые снимки."
+  },
+  {
+    category: "Гео и объекты",
+    name: "2GIS",
+    url: "https://2gis.ru/",
+    icon: "2",
+    description: "Карта и справочник организаций."
+  },
+  {
+    category: "Гео и объекты",
+    name: "Автокод",
+    url: "https://avtocod.ru/",
+    icon: "2",
+    description: "Проверка автомобилей по VIN, гос. номеру и другим параметрам."
+  },
+  {
+    category: "Гео и объекты",
+    name: "Nperf 5G Coverage Map",
+    url: "https://www.nperf.com/en/map/5g",
+    icon: "2",
+    description: "Карта покрытия 5G в разных странах."
+  },
+    {
+    category: "Гео и объекты",
+    name: "Alerts.in.ua",
+    url: "https://alerts.in.ua/",
+    icon: "2",
+    description: "Карта боевых действий в Украине."
   },
 
   // Медиа и файлы
@@ -149,14 +218,14 @@ const TOOLS = [
     name: "ExifTool",
     url: "https://exiftool.org/",
     icon: "E",
-    description: "Метаданные файлов"
+    description: "Метаданные файлов."
   },
   {
     category: "Медиа и файлы",
     name: "InVID",
     url: "https://www.invid-project.eu/",
     icon: "I",
-    description: "Анализ и проверка видео"
+    description: "Анализ и проверка видео."
   },
 
   // Реестры и бизнес
@@ -165,7 +234,7 @@ const TOOLS = [
     name: "OpenCorporates",
     url: "https://opencorporates.com/",
     icon: "O",
-    description: "Данные о компаниях"
+    description: "Данные о компаниях."
   },
 
   // Крипто и блокчейн
@@ -174,23 +243,44 @@ const TOOLS = [
     name: "Etherscan",
     url: "https://etherscan.io/",
     icon: "Ξ",
-    description: "Ethereum explorer"
+    description: "Ethereum explorer."
   },
   {
     category: "Крипто и блокчейн",
     name: "Blockchain.com Explorer",
     url: "https://www.blockchain.com/explorer",
     icon: "₿",
-    description: "Blockchain explorer"
+    description: "Blockchain explorer."
   },
 
   // Рабочая среда
   {
     category: "Рабочая среда",
-    name: "CyberChef",
-    url: "https://gchq.github.io/CyberChef/",
-    icon: "C",
-    description: "Инструменты преобразования данных"
+    name: "ZodiacGraph",
+    url: "https://zodiacgraph.netlify.app/",
+    icon: "Z",
+    description: "Инструмент для визуализации связей и анализа данных."
+  },
+  {
+    category: "Рабочая среда",
+    name: "Obsidian",
+    url: "https://obsidian.md/",
+    icon: "O",
+    description: "Мощный инструмент для заметок и организации знаний."
+  },
+  {
+    category: "Рабочая среда",
+    name: "Miro",
+    url: "https://miro.com/",
+    icon: "M",
+    description: "Платформа для совместной работы и визуализации идей."
+  },
+  {
+    category: "Рабочая среда",
+    name: "OSINT Framework",
+    url: "https://osintframework.com/",
+    icon: "M",
+    description: "Фреймворк для OSINT-ресурсов и инструментов."
   },
 
   // Искусственный интеллект
@@ -199,7 +289,7 @@ const TOOLS = [
     name: "Hugging Face",
     url: "https://huggingface.co/",
     icon: "HF",
-    description: "Модели и AI-инструменты"
+    description: "Модели и AI-инструменты."
   },
 
   // OPSEC и обучение
@@ -208,23 +298,44 @@ const TOOLS = [
     name: "OWASP",
     url: "https://owasp.org/",
     icon: "O",
-    description: "Безопасность и обучение"
+    description: "Безопасность и обучение."
+  },
+  {
+    category: "OPSEC и обучение",
+    name: "Tor",
+    url: "https://torproject.org/",
+    icon: "T",
+    description: "Анонимный доступ и защита конфиденциальности."
   },
 
   // Код и репозитории
   {
     category: "Код и репозитории",
+    name: "Nmap",
+    url: "https://nmap.org/book/man.html",
+    icon: "N",
+    description: "Сканирование сетей и анализ уязвимостей."
+  },
+  {
+    category: "Код и репозитории",
+    name: "ISC SANS",
+    url: "https://isc.sans.edu/rssfeed_full.xml",
+    icon: "I",
+    description: "Новости и анализ по кибербезопасности."
+  },
+  {
+    category: "Код и репозитории",
     name: "GitHub",
     url: "https://github.com/",
     icon: "GH",
-    description: "Репозитории и код"
+    description: "Репозитории и код."
   },
   {
     category: "Код и репозитории",
     name: "GitLab",
     url: "https://gitlab.com/",
     icon: "GL",
-    description: "Репозитории и CI/CD"
+    description: "Репозитории и CI/CD."
   },
 
   // Дорки
@@ -233,7 +344,7 @@ const TOOLS = [
     name: "Google Advanced Search",
     url: "https://www.google.com/advanced_search",
     icon: "G",
-    description: "Расширенный поиск"
+    description: "Расширенный поиск."
   },
 
   // Порты
@@ -242,30 +353,54 @@ const TOOLS = [
     name: "Shodan",
     url: "https://www.shodan.io/",
     icon: "S",
-    description: "Поиск публично доступных сервисов"
+    description: "Поиск публично доступных сервисов."
   },
   {
     category: "Порты",
     name: "Censys",
     url: "https://search.censys.io/",
     icon: "C",
-    description: "Поиск интернет-хостов и сертификатов"
+    description: "Поиск интернет-хостов и сертификатов."
   },
 
   // Зеркала
   {
     category: "Зеркала",
-    name: "Archive.today",
-    url: "https://archive.today/",
-    icon: "A",
-    description: "Архив веб-страниц"
+    name: "FindHomo",
+    url: "https://www.findhomo.com/",
+    icon: "З",
+    description: "Поиск людей и открытых данных по профильным записям."
   },
   {
     category: "Зеркала",
+    name: "FunStat/Telelog",
+    url: "https://funstat.info/",
+    icon: "З",
+    description: "Анализ Telegram-каналов, групп и статистики активности аудитории."
+  },
+  {
+    category: "Зеркала",
+    name: "Oko Search",
+    url: "https://okosearch.com/",
+    icon: "З",
+    verified: true,
+    description: "Ищет данные по открытым источником по номеру телефона, ФИО, почта и т.д"
+  },
+
+  // Веб-архивы
+  {
+    category: "Веб-архивы",
+    name: "Archive.today",
+    url: "https://archive.today/",
+    icon: "A",
+    description: "Архив веб-страниц."
+  },
+  {
+    category: "Веб-архивы",
     name: "Wayback Machine",
     url: "https://web.archive.org/",
     icon: "W",
-    description: "Веб-архив"
+    description: "Веб-архив."
   }
 ];
 
@@ -275,6 +410,215 @@ const state = {
   alphabetical: true
 };
 
+const CATEGORY_TRANSLATIONS = {
+  ru: {
+    "Поиск и мониторинг": "Поиск и мониторинг",
+    "Люди и контакты": "Люди и контакты",
+    "Соцсети и мессенджеры": "Соцсети и мессенджеры",
+    "Домены, сеть и угрозы": "Домены, сеть и угрозы",
+    "Гео и объекты": "Гео и объекты",
+    "Медиа и файлы": "Медиа и файлы",
+    "Реестры и бизнес": "Реестры и бизнес",
+    "Крипто и блокчейн": "Крипто и блокчейн",
+    "Рабочая среда": "Рабочая среда",
+    "Искусственный интеллект": "Искусственный интеллект",
+    "OPSEC и обучение": "OPSEC и обучение",
+    "Код и репозитории": "Код и репозитории",
+    "Дорки": "Дорки",
+    "Порты": "Порты",
+    "Зеркала": "Зеркала",
+    "Веб-архивы": "Веб-архивы"
+  },
+  en: {
+    "Поиск и мониторинг": "Search & Monitoring",
+    "Люди и контакты": "People & Contacts",
+    "Соцсети и мессенджеры": "Social Networks & Messengers",
+    "Домены, сеть и угрозы": "Domains, Network & Threats",
+    "Гео и объекты": "Geo & Places",
+    "Медиа и файлы": "Media & Files",
+    "Реестры и бизнес": "Registries & Business",
+    "Крипто и блокчейн": "Crypto & Blockchain",
+    "Рабочая среда": "Workspace",
+    "Искусственный интеллект": "Artificial Intelligence",
+    "OPSEC и обучение": "OPSEC & Training",
+    "Код и репозитории": "Code & Repositories",
+    "Дорки": "Dorks",
+    "Порты": "Ports",
+    "Зеркала": "Mirrors",
+    "Веб-архивы": "Web Archives"
+  }
+};
+
+const UI_TEXT = {
+  ru: {
+    categories: "Категории",
+    allTools: "Все инструменты",
+    heroText: "Лёгкий каталог инструментов для команды.",
+    toolsText: "инструментов",
+    categoriesText: "категорий",
+    searchPlaceholder: "Поиск инструмента...",
+    emptyTitle: "Ничего не найдено",
+    emptyText: "Попробуй изменить запрос или выбрать другую категорию.",
+    telegramLink: "Telegram-канал",
+    sortLabel: "A–Я",
+    loadingTools: "Загружаем инструменты..."
+  },
+  en: {
+    categories: "Categories",
+    allTools: "All tools",
+    heroText: "A lightweight OSINT tool catalog for the team.",
+    toolsText: "tools",
+    categoriesText: "categories",
+    searchPlaceholder: "Search tool...",
+    emptyTitle: "Nothing found",
+    emptyText: "Try a different query or choose another category.",
+    telegramLink: "Telegram channel",
+    sortLabel: "A–Z",
+    loadingTools: "Loading tools..."
+  }
+};
+
+const TOOL_NAMES_EN = {
+  "Автокод": "Avtocod",
+  "E-Caller": "E-Caller",
+  "HackCheck": "HackCheck",
+  "Dehashed": "Dehashed",
+  "OSINTKit": "OSINTKit",
+  "TGCollector": "TGCollector",
+  "TgramSearch": "TgramSearch",
+  "Telescan": "Telescan",
+  "FindHomo": "FindHomo",
+  "FunStat/Telelog": "FunStat/Telelog",
+  "Зеркало": "Mirror"
+};
+
+const TOOL_DESCRIPTIONS_EN = {
+  "Google": "Search engine.",
+  "Yandex": "Search and web services.",
+  "DuckDuckGo": "Search engine.",
+  "Brave Search": "Independent search engine.",
+  "SearXNG": "Meta-search engine.",
+  "Startpage": "Private search engine.",
+  "Google Scholar": "Academic search.",
+  "arXiv": "Research publications.",
+  "Hunter": "Find professional email addresses.",
+  "Have I Been Pwned": "Check whether accounts have appeared in data breaches.",
+  "Truecaller": "Phone number lookup database.",
+  "SMSC HLR Lookup": "Check a phone number and its carrier.",
+  "E-Caller": "Check a phone number and its operator.",
+  "HackCheck": "Check data leaks and user information.",
+  "Dehashed": "Search data leaks and user records.",
+  "OSINTKit": "Search breach data and information about Russian citizens involved in crimes in Ukraine.",
+  "TGCollector": "Collect data from Telegram.",
+  "TgramSearch": "Search Telegram channels and groups.",
+  "Telescan": "Analyze Telegram channels and groups.",
+  "Signal": "Open-source messaging app with end-to-end encryption.",
+  "who.is": "Domain and IP address ownership information.",
+  "onion lookup": "Find information about .onion domains and their owners.",
+  "VirusTotal": "Analyze files, URLs, and domains.",
+  "OpenStreetMap": "Open map.",
+  "Google Maps": "Maps and satellite imagery.",
+  "2GIS": "Map and business directory.",
+  "Автокод": "Vehicle check by VIN, license plate and other parameters.",
+  "Nperf 5G Coverage Map": "5G coverage map across countries.",
+  "Alerts.in.ua": "Map of combat actions in Ukraine.",
+  "ExifTool": "File metadata.",
+  "InVID": "Video analysis and verification.",
+  "OpenCorporates": "Company data.",
+  "Etherscan": "Ethereum explorer.",
+  "Blockchain.com Explorer": "Blockchain explorer.",
+  "ZodiacGraph": "Visualize connections and analyze data.",
+  "Obsidian": "Note-taking and knowledge management.",
+  "Miro": "Collaborative workspace for visualizing ideas.",
+  "OSINT Framework": "OSINT resource and tool framework.",
+  "Hugging Face": "AI models and tools.",
+  "OWASP": "Security resources and training.",
+  "Tor": "Anonymous access and privacy protection.",
+  "Nmap": "Network scanning and vulnerability analysis.",
+  "ISC SANS": "Cybersecurity news and analysis.",
+  "GitHub": "Code and repositories.",
+  "GitLab": "Repositories and CI/CD.",
+  "Google Advanced Search": "Advanced search.",
+  "Shodan": "Find publicly accessible internet-connected services.",
+  "Censys": "Search internet hosts and certificates.",
+  "FindHomo": "People search and profile data discovery service.",
+  "FunStat/Telelog": "Telegram channel and group analytics with audience and activity statistics.",
+  "Oko Search": "Search open-source information using a phone number, full name, email address, and more.",
+  "Зеркало": "Mirror view for reading and analyzing web pages.",
+  "Archive.today": "Web page archive.",
+  "Wayback Machine": "Web archive."
+};
+
+function getToolName(tool) {
+  if (getCurrentLanguage() === "en") {
+    return TOOL_NAMES_EN[tool.name] || tool.name;
+  }
+
+  return tool.name;
+}
+
+function getToolDescription(tool) {
+  if (getCurrentLanguage() === "en") {
+    return TOOL_DESCRIPTIONS_EN[tool.name] || tool.description || "";
+  }
+
+  return tool.description || "";
+}
+
+function getCurrentLanguage() {
+  return document.body.dataset.lang || "ru";
+}
+
+function translateCategory(category) {
+  return CATEGORY_TRANSLATIONS[getCurrentLanguage()][category] || category;
+}
+
+function applyLanguage(lang) {
+  const textBundle = UI_TEXT[lang] || UI_TEXT.ru;
+
+  document.body.dataset.lang = lang;
+  document.documentElement.lang = lang === "en" ? "en" : "ru";
+
+  const langToggle = document.getElementById("langToggle");
+  if (langToggle) {
+    langToggle.textContent = lang === "en" ? "RU" : "EN";
+  }
+
+  document.querySelectorAll("[data-i18n]").forEach(node => {
+    const key = node.dataset.i18n;
+    if (textBundle[key]) {
+      node.textContent = textBundle[key];
+    }
+  });
+
+  document.querySelectorAll("[data-i18n-placeholder]").forEach(node => {
+    const key = node.dataset.i18nPlaceholder;
+    if (textBundle[key]) {
+      node.placeholder = textBundle[key];
+    }
+  });
+
+  const catalogLoading = document.getElementById("catalogLoading");
+  if (catalogLoading) {
+    catalogLoading.textContent = textBundle.loadingTools;
+  }
+
+  const sortBtn = document.getElementById("sortBtn");
+  if (sortBtn) {
+    sortBtn.textContent = textBundle.sortLabel;
+  }
+
+  const themeBtn = document.getElementById("themeBtn");
+  if (themeBtn) {
+    const isLight = document.body.classList.contains("light");
+    themeBtn.title = lang === "en" ? "Toggle theme" : "Переключить тему";
+    themeBtn.setAttribute("aria-label", lang === "en" ? "Toggle theme" : "Переключить тему");
+    themeBtn.setAttribute("aria-pressed", String(isLight));
+  }
+
+  render();
+}
+
 const catalog = document.getElementById("catalog");
 const categoryNav = document.getElementById("categoryNav");
 const searchInput = document.getElementById("searchInput");
@@ -282,33 +626,27 @@ const empty = document.getElementById("empty");
 const toolCount = document.getElementById("toolCount");
 const categoryCount = document.getElementById("categoryCount");
 const allCount = document.getElementById("allCount");
+const catalogLoading = document.getElementById("catalogLoading");
+const loadingScreen = document.getElementById("loadingScreen");
+const loadingStartedAt = performance.now();
 
 const categories = [...new Set(TOOLS.map(tool => tool.category))];
-
-function getCategoryCounts() {
-  return categories.reduce((result, category) => {
-    result[category] = TOOLS.filter(tool => tool.category === category).length;
-    return result;
-  }, {});
-}
+const categoryCounts = TOOLS.reduce((counts, tool) => {
+  counts[tool.category] = (counts[tool.category] || 0) + 1;
+  return counts;
+}, {});
 
 function renderCategoryNav() {
-  const counts = getCategoryCounts();
+  document.querySelector('.sidebar > .category[data-category="all"]')
+    .classList.toggle("active", state.category === "all");
 
   categoryNav.innerHTML = categories.map(category => `
     <button class="category ${state.category === category ? "active" : ""}"
             data-category="${escapeHtml(category)}">
-      <span>${escapeHtml(category)}</span>
-      <span class="count">${counts[category]}</span>
+      <span>${escapeHtml(translateCategory(category))}</span>
+      <span class="count">${categoryCounts[category]}</span>
     </button>
   `).join("");
-
-  document.querySelectorAll(".category").forEach(button => {
-    button.addEventListener("click", () => {
-      state.category = button.dataset.category;
-      render();
-    });
-  });
 
   allCount.textContent = TOOLS.length;
 }
@@ -322,8 +660,9 @@ function filteredTools() {
 
     const searchMatch =
       !query ||
-      tool.name.toLowerCase().includes(query) ||
-      tool.description.toLowerCase().includes(query) ||
+      getToolName(tool).toLowerCase().includes(query) ||
+      (tool.description || "").toLowerCase().includes(query) ||
+      getToolDescription(tool).toLowerCase().includes(query) ||
       tool.category.toLowerCase().includes(query);
 
     return categoryMatch && searchMatch;
@@ -331,14 +670,61 @@ function filteredTools() {
 
   if (state.alphabetical) {
     result = [...result].sort((a, b) =>
-      a.name.localeCompare(b.name, "ru")
+      getToolName(a).localeCompare(getToolName(b), undefined, { sensitivity: "base" })
     );
   }
 
   return result;
 }
 
+let renderVersion = 0;
+let renderFrame = 0;
+let loadingHideTimer = 0;
+const RENDER_BATCH_SIZE = 12;
+const MIN_LOADING_DURATION = 2000;
+
+function finishLoadingScreen() {
+  if (!loadingScreen || loadingHideTimer || loadingScreen.classList.contains("is-hidden")) return;
+
+  const remaining = Math.max(0, MIN_LOADING_DURATION - (performance.now() - loadingStartedAt));
+  loadingHideTimer = window.setTimeout(() => {
+    loadingScreen.classList.add("is-hidden");
+    loadingScreen.setAttribute("aria-hidden", "true");
+    loadingHideTimer = 0;
+  }, remaining);
+}
+
+function renderToolCard(tool) {
+  return `
+    <a class="tool"
+       href="${escapeAttribute(tool.url)}"
+       target="_blank"
+       rel="noopener noreferrer">
+      <div class="tool-icon">${escapeHtml(tool.icon || "⌁")}</div>
+      <div class="tool-body">
+        <div class="tool-name">
+          <span class="tool-name-text">${escapeHtml(getToolName(tool))}</span>
+          ${tool.verified ? '<img class="verified-icon" src="verifed.png" alt="Verified" title="Verified">' : ""}
+        </div>
+        <div class="tool-desc">${escapeHtml(getToolDescription(tool))}</div>
+        <div class="tool-url">${escapeHtml(new URL(tool.url).hostname)}</div>
+      </div>
+    </a>
+  `;
+}
+
 function render() {
+  const version = ++renderVersion;
+
+  if (renderFrame) {
+    cancelAnimationFrame(renderFrame);
+    renderFrame = 0;
+  }
+  if (loadingHideTimer) {
+    clearTimeout(loadingHideTimer);
+    loadingHideTimer = 0;
+  }
+
   renderCategoryNav();
 
   const tools = filteredTools();
@@ -352,32 +738,58 @@ function render() {
   catalog.innerHTML = Object.entries(grouped).map(([category, items]) => `
     <section class="category-block">
       <div class="category-heading">
-        <h2>${escapeHtml(category)}</h2>
+        <h2>${escapeHtml(translateCategory(category))}</h2>
         <span>${items.length}</span>
       </div>
 
-      <div class="tools">
-        ${items.map(tool => `
-          <a class="tool"
-             href="${escapeAttribute(tool.url)}"
-             target="_blank"
-             rel="noopener noreferrer">
-            <div class="tool-icon">${escapeHtml(tool.icon || "⌁")}</div>
-            <div class="tool-body">
-              <div class="tool-name">${escapeHtml(tool.name)}</div>
-              <div class="tool-desc">${escapeHtml(tool.description || "")}</div>
-              <div class="tool-url">${escapeHtml(new URL(tool.url).hostname)}</div>
-            </div>
-          </a>
-        `).join("")}
-      </div>
+      <div class="tools" data-category="${escapeAttribute(category)}"></div>
     </section>
   `).join("");
 
   empty.classList.toggle("hidden", tools.length !== 0);
+  catalogLoading.classList.toggle("hidden", tools.length <= RENDER_BATCH_SIZE);
+  catalog.setAttribute("aria-busy", String(tools.length > RENDER_BATCH_SIZE));
 
   toolCount.textContent = tools.length;
   categoryCount.textContent = categories.length;
+
+  if (tools.length === 0) {
+    finishLoadingScreen();
+    return;
+  }
+
+  const toolContainers = new Map(
+    [...catalog.querySelectorAll(".tools")].map(container => [container.dataset.category, container])
+  );
+  let nextToolIndex = 0;
+
+  const appendBatch = () => {
+    if (version !== renderVersion) return;
+
+    const batchByCategory = new Map();
+    const batchEnd = Math.min(nextToolIndex + RENDER_BATCH_SIZE, tools.length);
+    for (; nextToolIndex < batchEnd; nextToolIndex += 1) {
+      const tool = tools[nextToolIndex];
+      const batch = batchByCategory.get(tool.category) || [];
+      batch.push(renderToolCard(tool));
+      batchByCategory.set(tool.category, batch);
+    }
+
+    batchByCategory.forEach((cards, category) => {
+      toolContainers.get(category).insertAdjacentHTML("beforeend", cards.join(""));
+    });
+
+    if (nextToolIndex < tools.length) {
+      renderFrame = requestAnimationFrame(appendBatch);
+    } else {
+      renderFrame = 0;
+      catalogLoading.classList.add("hidden");
+      catalog.setAttribute("aria-busy", "false");
+      finishLoadingScreen();
+    }
+  };
+
+  appendBatch();
 }
 
 function escapeHtml(value) {
@@ -395,25 +807,38 @@ function escapeAttribute(value) {
 
 searchInput.addEventListener("input", () => {
   state.query = searchInput.value;
+});
+
+document.querySelector(".sidebar").addEventListener("click", event => {
+  const button = event.target.closest(".category");
+  if (!button || !button.dataset.category) return;
+
+  state.category = button.dataset.category;
   render();
 });
 
-document.getElementById("sortBtn").addEventListener("click", event => {
-  state.alphabetical = !state.alphabetical;
-  event.currentTarget.textContent = state.alphabetical ? "A–Я" : "Исходный";
-  render();
-});
+const langToggle = document.getElementById("langToggle");
 
-document.getElementById("themeBtn").addEventListener("click", () => {
-  document.body.classList.toggle("light");
-  localStorage.setItem(
-    "osint-theme",
-    document.body.classList.contains("light") ? "light" : "dark"
-  );
+if (langToggle) {
+  langToggle.addEventListener("click", () => {
+    const nextLang = getCurrentLanguage() === "en" ? "ru" : "en";
+    applyLanguage(nextLang);
+  });
+}
+
+applyLanguage("ru");
+
+const themeBtn = document.getElementById("themeBtn");
+
+themeBtn.addEventListener("click", () => {
+  const isLight = document.body.classList.toggle("light");
+  themeBtn.setAttribute("aria-pressed", String(isLight));
+  localStorage.setItem("osint-theme", isLight ? "light" : "dark");
 });
 
 if (localStorage.getItem("osint-theme") === "light") {
   document.body.classList.add("light");
+  themeBtn.setAttribute("aria-pressed", "true");
 }
 
 document.addEventListener("keydown", event => {
@@ -425,208 +850,8 @@ document.addEventListener("keydown", event => {
   if (event.key === "Escape" && document.activeElement === searchInput) {
     searchInput.value = "";
     state.query = "";
-    render();
     searchInput.blur();
   }
 });
 
 render();
-
-const adminDialog = document.getElementById("adminDialog");
-const adminLoginView = document.getElementById("adminLoginView");
-const adminWorkspace = document.getElementById("adminWorkspace");
-const adminLoginForm = document.getElementById("adminLoginForm");
-const adminLoginError = document.getElementById("adminLoginError");
-const adminStatus = document.getElementById("adminStatus");
-const blockedIpList = document.getElementById("blockedIpList");
-const adminLogList = document.getElementById("adminLogList");
-
-async function adminRequest(url, options = {}) {
-  const response = await fetch(url, {
-    credentials: "same-origin",
-    ...options,
-    headers: {
-      "Content-Type": "application/json",
-      ...options.headers
-    }
-  });
-  let result = {};
-  try {
-    result = await response.json();
-  } catch {
-    result = {};
-  }
-  if (!response.ok) throw new Error(result.error || "Не удалось выполнить запрос.");
-  return result;
-}
-
-function showAdminLogin(message = "") {
-  adminLoginView.hidden = false;
-  adminWorkspace.hidden = true;
-  adminLoginError.textContent = message;
-  adminLoginError.hidden = !message;
-}
-
-function showAdminWorkspace() {
-  adminLoginView.hidden = true;
-  adminWorkspace.hidden = false;
-  adminLoginError.hidden = true;
-}
-
-function renderBlockedIps(ips) {
-  blockedIpList.replaceChildren();
-
-  if (ips.length === 0) {
-    const emptyItem = document.createElement("li");
-    emptyItem.className = "admin-list-empty";
-    emptyItem.textContent = "Заблокированных адресов нет.";
-    blockedIpList.append(emptyItem);
-    return;
-  }
-
-  ips.forEach(ip => {
-    const item = document.createElement("li");
-    const address = document.createElement("span");
-    const removeButton = document.createElement("button");
-    address.textContent = ip;
-    removeButton.className = "admin-secondary";
-    removeButton.type = "button";
-    removeButton.textContent = "Снять блокировку";
-    removeButton.addEventListener("click", async () => {
-      try {
-        await adminRequest(`/api/admin/blocked-ips/${encodeURIComponent(ip)}`, { method: "DELETE" });
-        await loadAdminData();
-        setAdminStatus(`Блокировка для ${ip} снята.`);
-      } catch (error) {
-        setAdminStatus(error.message, true);
-      }
-    });
-    item.append(address, removeButton);
-    blockedIpList.append(item);
-  });
-}
-
-function renderAdminLogs(logs) {
-  adminLogList.replaceChildren();
-
-  if (logs.length === 0) {
-    const row = document.createElement("tr");
-    const cell = document.createElement("td");
-    cell.colSpan = 3;
-    cell.className = "admin-list-empty";
-    cell.textContent = "Записей пока нет.";
-    row.append(cell);
-    adminLogList.append(row);
-    return;
-  }
-
-  logs.forEach(entry => {
-    const row = document.createElement("tr");
-    const timestamp = document.createElement("td");
-    const address = document.createElement("td");
-    const event = document.createElement("td");
-    timestamp.textContent = new Intl.DateTimeFormat("ru-RU", {
-      dateStyle: "short",
-      timeStyle: "short"
-    }).format(new Date(entry.at));
-    address.textContent = entry.ip;
-    event.textContent = entry.blocked ? "Заблокирован" : "Посещение";
-    row.append(timestamp, address, event);
-    adminLogList.append(row);
-  });
-}
-
-function setAdminStatus(message, isError = false) {
-  adminStatus.textContent = message;
-  adminStatus.classList.toggle("admin-error", isError);
-}
-
-async function loadAdminData() {
-  const data = await adminRequest("/api/admin");
-  renderBlockedIps(data.blockedIps);
-  renderAdminLogs(data.logs);
-}
-
-async function openAdminPanel() {
-  if (!adminDialog.open) adminDialog.showModal();
-  showAdminLogin();
-
-  try {
-    const session = await adminRequest("/api/session");
-    if (!session.authenticated) return;
-    showAdminWorkspace();
-    await loadAdminData();
-  } catch {
-    showAdminLogin("Не удалось связаться с сервером. Запустите сайт через Node.js-сервер.");
-  }
-}
-
-document.getElementById("adminBtn").addEventListener("click", openAdminPanel);
-document.getElementById("adminCloseBtn").addEventListener("click", () => adminDialog.close());
-
-adminDialog.addEventListener("click", event => {
-  if (event.target === adminDialog) adminDialog.close();
-});
-
-adminLoginForm.addEventListener("submit", async event => {
-  event.preventDefault();
-  const submitButton = adminLoginForm.querySelector('[type="submit"]');
-  submitButton.disabled = true;
-
-  try {
-    await adminRequest("/api/login", {
-      method: "POST",
-      body: JSON.stringify({ password: document.getElementById("adminPassword").value })
-    });
-    adminLoginForm.reset();
-    showAdminWorkspace();
-    await loadAdminData();
-    setAdminStatus("Вход выполнен.");
-  } catch (error) {
-    adminLoginError.textContent = error.message;
-    adminLoginError.hidden = false;
-  } finally {
-    submitButton.disabled = false;
-  }
-});
-
-document.getElementById("blockIpForm").addEventListener("submit", async event => {
-  event.preventDefault();
-  const input = document.getElementById("blockIpInput");
-
-  try {
-    await adminRequest("/api/admin/blocked-ips", {
-      method: "POST",
-      body: JSON.stringify({ ip: input.value })
-    });
-    const ip = input.value.trim();
-    input.value = "";
-    await loadAdminData();
-    setAdminStatus(`Адрес ${ip} добавлен в блок-лист.`);
-  } catch (error) {
-    setAdminStatus(error.message, true);
-  }
-});
-
-document.getElementById("clearLogsBtn").addEventListener("click", async () => {
-  if (!confirm("Удалить все записи журнала?")) return;
-
-  try {
-    await adminRequest("/api/admin/logs", { method: "DELETE" });
-    await loadAdminData();
-    setAdminStatus("Журнал очищен.");
-  } catch (error) {
-    setAdminStatus(error.message, true);
-  }
-});
-
-document.getElementById("adminLogoutBtn").addEventListener("click", async () => {
-  try {
-    await adminRequest("/api/logout", { method: "POST", body: "{}" });
-    showAdminLogin("Вы вышли из панели администратора.");
-  } catch (error) {
-    setAdminStatus(error.message, true);
-  }
-});
-
-if (window.location.pathname === "/admin") openAdminPanel();
