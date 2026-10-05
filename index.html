@@ -3,54 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Osint-Tools — каталог инструментов сквада.">
-  <title>Osint-Tools</title>
-  <link rel="icon" type="image/png" href="favicon.png?v=2">
+  <meta name="description" content="OSINT Catalog — каталог инструментов сквада">
+  <title>OSINT Catalog</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="maintenance-screen" role="alertdialog" aria-modal="true" aria-labelledby="maintenanceTitle" aria-describedby="maintenanceMessage">
-    <div class="maintenance-card">
-      <div class="maintenance-header">
-        <span class="maintenance-badge">SERVICE STATUS</span>
-        <div class="maintenance-indicator" aria-hidden="true">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      </div>
-      <h1 id="maintenanceTitle">Технические работы</h1>
-      <p class="maintenance-kicker">Ожидаем завершения обновления платформы</p>
-      <p id="maintenanceMessage">Скоро работа сайта возобновится. Спасибо за ваше терпение!</p>
-      <div class="maintenance-status"><span></span> Обновление платформы</div>
-    </div>
-  </div>
-  <div class="site-content" inert aria-hidden="true">
   <header class="topbar">
-    <div class="brand-wrap">
-      <a class="brand" href="#">
-        <img class="brand-mark" src="logo.png" alt="">
-        <span class="brand-title">Osint-Tools</span>
-      </a>
-      <span class="brand-subtitle">by whiteopex</span>
-    </div>
-
-    <a class="telegram-link" href="https://t.me/osintsiteopex" target="_blank" rel="noopener noreferrer" data-i18n="telegramLink">
-      Telegram-канал
+    <a class="brand" href="#">
+      <span class="brand-mark">⌘</span>
+      <span>OSINT Catalog</span>
     </a>
 
     <div class="top-actions">
-      <button class="lang-btn" id="langToggle" type="button" aria-label="English interface">EN</button>
-      <button class="icon-btn" id="themeBtn" type="button" title="Переключить тему" aria-label="Переключить тему" aria-pressed="false">☼</button>
-      <span class="admin-link" aria-label="Beta-test">Beta-test</span>
+      <button class="icon-btn" id="themeBtn" title="Переключить тему" aria-label="Переключить тему">☼</button>
+      <button class="admin-link" id="adminBtn" type="button">Admin</button>
     </div>
   </header>
 
   <main class="layout">
     <aside class="sidebar">
-      <div class="sidebar-title" data-i18n="categories">Категории</div>
+      <div class="sidebar-title">Категории</div>
       <button class="category active" data-category="all">
-        <span data-i18n="allTools">Все инструменты</span><span class="count" id="allCount">0</span>
+        <span>Все инструменты</span><span class="count" id="allCount">0</span>
       </button>
       <div id="categoryNav"></div>
     </aside>
@@ -59,42 +33,106 @@
       <div class="hero">
         <div>
           <div class="eyebrow">XZX SQUAD</div>
-          <h1>Osint-Tools</h1>
-          <p data-i18n="heroText">Каталог OSINT-инструментов для команды.</p>
+          <h1>OSINT Catalog</h1>
+          <p>Лёгкий каталог инструментов для команды.</p>
         </div>
 
         <div class="stats">
-          <div><strong id="toolCount">0</strong><span data-i18n="toolsText">инструментов</span></div>
-          <div><strong id="categoryCount">0</strong><span data-i18n="categoriesText">категорий</span></div>
+          <div><strong id="toolCount">0</strong><span>инструментов</span></div>
+          <div><strong id="categoryCount">0</strong><span>категорий</span></div>
         </div>
       </div>
 
       <div class="toolbar">
         <label class="search">
           <span>⌕</span>
-          <input id="searchInput" type="search" placeholder="Поиск инструмента..." autocomplete="off" data-i18n-placeholder="searchPlaceholder">
+          <input id="searchInput" type="search" placeholder="Поиск инструмента..." autocomplete="off">
           <kbd>Ctrl K</kbd>
         </label>
-        <button class="sort-btn" id="sortBtn" type="button">A–Я</button>
+        <button class="sort-btn" id="sortBtn">A–Я</button>
       </div>
 
       <div id="catalog"></div>
 
       <div class="empty hidden" id="empty">
         <div class="empty-icon">⌕</div>
-        <h3 data-i18n="emptyTitle">Ничего не найдено</h3>
-        <p data-i18n="emptyText">Попробуй изменить запрос или выбрать другую категорию.</p>
+        <h3>Ничего не найдено</h3>
+        <p>Попробуй изменить запрос или выбрать другую категорию.</p>
       </div>
-
     </section>
   </main>
 
-  <footer>
-    <span>Osint-Tools</span>
-    <span>XZX SQUAD 2026</span>
-  </footer>
-  </div>
+  <dialog class="admin-dialog" id="adminDialog" aria-labelledby="adminTitle">
+    <div class="admin-shell">
+      <header class="admin-header">
+        <div>
+          <div class="eyebrow">УПРАВЛЕНИЕ</div>
+          <h2 id="adminTitle">Панель администратора</h2>
+        </div>
+        <button class="icon-btn" id="adminCloseBtn" type="button" aria-label="Закрыть панель">×</button>
+      </header>
 
-  <script src="script.js?v=4"></script>
+      <div class="admin-login" id="adminLoginView" hidden>
+        <p>Войдите, чтобы просматривать журнал и управлять блокировками.</p>
+        <form class="admin-form" id="adminLoginForm">
+          <label for="adminPassword">Пароль администратора</label>
+          <div class="admin-form-row">
+            <input id="adminPassword" name="password" type="password" autocomplete="current-password" required>
+            <button class="admin-action" type="submit">Войти</button>
+          </div>
+        </form>
+        <p class="admin-error" id="adminLoginError" role="alert" hidden></p>
+      </div>
+
+      <div class="admin-workspace" id="adminWorkspace" hidden>
+        <div class="admin-toolbar">
+          <p id="adminStatus" role="status">Журнал хранит не более 500 последних событий.</p>
+          <button class="admin-secondary" id="adminLogoutBtn" type="button">Выйти</button>
+        </div>
+
+        <section class="admin-section" aria-labelledby="blockedTitle">
+          <div class="admin-section-heading">
+            <div>
+              <h3 id="blockedTitle">Блокировка IP</h3>
+              <p>Блокировка действует для точного IPv4- или IPv6-адреса.</p>
+            </div>
+          </div>
+          <form class="admin-form" id="blockIpForm">
+            <label for="blockIpInput">IP-адрес</label>
+            <div class="admin-form-row">
+              <input id="blockIpInput" name="ip" type="text" inputmode="text" autocomplete="off" placeholder="Например, 203.0.113.10" required>
+              <button class="admin-action" type="submit">Заблокировать</button>
+            </div>
+          </form>
+          <ul class="admin-ip-list" id="blockedIpList" aria-live="polite"></ul>
+        </section>
+
+        <section class="admin-section" aria-labelledby="logTitle">
+          <div class="admin-section-heading">
+            <div>
+              <h3 id="logTitle">Журнал посещений</h3>
+              <p>Показываются IP и время загрузки каталога. Параметры URL не сохраняются.</p>
+            </div>
+            <button class="admin-secondary" id="clearLogsBtn" type="button">Очистить журнал</button>
+          </div>
+          <div class="admin-table-wrap">
+            <table class="admin-table">
+              <thead>
+                <tr><th scope="col">Время</th><th scope="col">IP-адрес</th><th scope="col">Событие</th></tr>
+              </thead>
+              <tbody id="adminLogList"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </div>
+  </dialog>
+
+  <footer>
+    <span>OSINT Catalog</span>
+    <span>Сервер может сохранять IP-адрес и время посещения (до 500 записей).</span>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
