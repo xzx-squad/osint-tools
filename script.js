@@ -378,13 +378,6 @@ const TOOLS = [
     icon: "З",
     description: "Анализ Telegram-каналов, групп и статистики активности аудитории."
   },
-    {
-    category: "Зеркала",
-    name: "OkoSearch",
-    url: "https://okosearch.com/",
-    icon: "З",
-    description: "Данный бот может анализировать номера, почты и т.д, ищет с открытых источников не используя закупленные базы данных."
-  },
 
   // Веб-архивы
   {
@@ -452,7 +445,7 @@ const UI_TEXT = {
   ru: {
     categories: "Категории",
     allTools: "Все инструменты",
-    heroText: "Каталог OSINT-инструментов.",
+    heroText: "Лёгкий каталог инструментов для команды.",
     toolsText: "инструментов",
     categoriesText: "категорий",
     searchPlaceholder: "Поиск инструмента...",
@@ -540,7 +533,6 @@ const TOOL_DESCRIPTIONS_EN = {
   "Censys": "Search internet hosts and certificates.",
   "FindHomo": "People search and profile data discovery service.",
   "FunStat/Telelog": "Telegram channel and group analytics with audience and activity statistics.",
-  "OkoSearch": "This bot can analyze phone numbers, emails, and more by searching open sources without using purchased databases.",
   "Зеркало": "Mirror view for reading and analyzing web pages.",
   "Archive.today": "Web page archive.",
   "Wayback Machine": "Web archive."
@@ -608,14 +600,7 @@ function applyLanguage(lang) {
     themeBtn.setAttribute("aria-pressed", String(isLight));
   }
 
-  renderWithTransition();
-
-  const siteLoader = document.getElementById("siteLoader");
-  if (siteLoader) {
-    window.setTimeout(() => {
-      siteLoader.classList.add("is-hidden");
-    }, 2500);
-  }
+  render();
 }
 
 const catalog = document.getElementById("catalog");
@@ -646,13 +631,10 @@ function renderCategoryNav() {
     </button>
   `).join("");
 
-  const allToolsButton = document.querySelector('.category[data-category="all"]');
-  allToolsButton.classList.toggle("active", state.category === "all");
-
   document.querySelectorAll(".category").forEach(button => {
     button.addEventListener("click", () => {
       state.category = button.dataset.category;
-      renderWithTransition();
+      render();
     });
   });
 
@@ -727,18 +709,6 @@ function render() {
   categoryCount.textContent = categories.length;
 }
 
-function renderWithTransition() {
-  if (
-    typeof document.startViewTransition === "function" &&
-    !window.matchMedia("(prefers-reduced-motion: reduce)").matches
-  ) {
-    document.startViewTransition(render);
-    return;
-  }
-
-  render();
-}
-
 function escapeHtml(value) {
   return String(value)
     .replaceAll("&", "&amp;")
@@ -754,7 +724,7 @@ function escapeAttribute(value) {
 
 searchInput.addEventListener("input", () => {
   state.query = searchInput.value;
-  renderWithTransition();
+  render();
 });
 
 const langToggle = document.getElementById("langToggle");
@@ -790,7 +760,7 @@ document.addEventListener("keydown", event => {
   if (event.key === "Escape" && document.activeElement === searchInput) {
     searchInput.value = "";
     state.query = "";
-    renderWithTransition();
+    render();
     searchInput.blur();
   }
 });
