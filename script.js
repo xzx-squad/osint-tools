@@ -445,7 +445,7 @@ const UI_TEXT = {
   ru: {
     categories: "Категории",
     allTools: "Все инструменты",
-    heroText: "Лёгкий каталог инструментов для команды.",
+    heroText: "Каталог OSINT-инструментов..",
     toolsText: "инструментов",
     categoriesText: "категорий",
     searchPlaceholder: "Поиск инструмента...",
@@ -457,7 +457,7 @@ const UI_TEXT = {
   en: {
     categories: "Categories",
     allTools: "All tools",
-    heroText: "A lightweight OSINT tool catalog for the team.",
+    heroText: "Catalog OSINT-tools",
     toolsText: "tools",
     categoriesText: "categories",
     searchPlaceholder: "Search tool...",
