@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
@@ -9,19 +9,84 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main class="graph-page" aria-label="Граф категорий">
-    <div class="graph-scene">
-      <svg id="graphSvg" class="graph-svg" viewBox="0 0 1000 700" preserveAspectRatio="none" aria-hidden="true"></svg>
+  <div class="loading-screen" id="loadingScreen" role="status" aria-live="polite" aria-label="Загрузка сайта">
+    <div class="loading-panel">
+      <img class="loading-logo" src="logo.png" alt="">
+      <div class="loading-title">Osint-Tools</div>
+      <div class="loading-caption" data-i18n="loadingTools">Загружаем инструменты...</div>
+      <div class="loading-track" aria-hidden="true"><span></span></div>
+    </div>
+  </div>
 
-      <div class="graph-node">
-        <span class="node-mark">⌁</span>
-        <span class="node-text">OSINT Catalog</span>
+  <header class="topbar">
+    <div class="brand-wrap">
+      <a class="brand" href="#">
+        <img class="brand-mark" src="logo.png" alt="">
+        <span class="brand-title">Osint-Tools</span>
+      </a>
+      <span class="brand-subtitle">by whiteopex</span>
+    </div>
+
+    <a class="telegram-link" href="https://t.me/osintsiteopex" target="_blank" rel="noopener noreferrer" data-i18n="telegramLink">
+      Telegram-канал
+    </a>
+
+    <div class="top-actions">
+      <button class="lang-btn" id="langToggle" type="button" aria-label="English interface">EN</button>
+      <button class="icon-btn" id="themeBtn" type="button" title="Переключить тему" aria-label="Переключить тему" aria-pressed="false">☼</button>
+      <span class="admin-link" aria-label="Beta-test">Beta-test</span>
+    </div>
+  </header>
+
+  <main class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-title" data-i18n="categories">Категории</div>
+      <button class="category active" data-category="all">
+        <span data-i18n="allTools">Все инструменты</span><span class="count" id="allCount">0</span>
+      </button>
+      <div id="categoryNav"></div>
+    </aside>
+
+    <section class="content">
+      <div class="hero">
+        <div>
+          <div class="eyebrow">XZX SQUAD</div>
+          <h1>Osint-Tools</h1>
+          <p data-i18n="heroText">Лёгкий каталог инструментов для команды.</p>
+        </div>
+
+        <div class="stats">
+          <div><strong id="toolCount">0</strong><span data-i18n="toolsText">инструментов</span></div>
+          <div><strong id="categoryCount">0</strong><span data-i18n="categoriesText">категорий</span></div>
+        </div>
       </div>
 
-      <div class="graph-categories" id="graphCategories" aria-live="polite"></div>
-    </div>
+      <div class="toolbar">
+        <label class="search">
+          <span>⌕</span>
+          <input id="searchInput" type="search" placeholder="Поиск инструмента..." autocomplete="off" data-i18n-placeholder="searchPlaceholder">
+          <kbd>Ctrl K</kbd>
+        </label>
+        <button class="sort-btn" id="sortBtn" type="button">A–Я</button>
+      </div>
+
+      <div id="catalog"></div>
+        <div class="catalog-loading hidden" id="catalogLoading" role="status" aria-live="polite"></div>
+
+        <div class="empty hidden" id="empty">
+        <div class="empty-icon">⌕</div>
+        <h3 data-i18n="emptyTitle">Ничего не найдено</h3>
+        <p data-i18n="emptyText">Попробуй изменить запрос или выбрать другую категорию.</p>
+      </div>
+
+    </section>
   </main>
 
-  <script src="script.js"></script>
+  <footer>
+    <span>Osint-Tools</span>
+    <span>XZX SQUAD 2026</span>
+  </footer>
+
+  <script src="script.js?v=8"></script>
 </body>
 </html>
