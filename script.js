@@ -1,4 +1,4 @@
-const TOOLS = [
+﻿const TOOLS = [
   // Поиск и мониторинг
   {
     category: "Поиск и мониторинг",
@@ -386,6 +386,30 @@ const TOOLS = [
     verified: true,
     description: "Ищет данные по открытым источником по номеру телефона, ФИО, почта и т.д"
   },
+  {
+    category: "Зеркала",
+    name: "Telesint",
+    url: "https://telesint.dev/",
+    icon: "З",
+    description: "Telesint - инструмент для анализа аудитории Telegram, разработанный для маркетологов и аналитиков."
+  },
+  {
+    category: "Зеркала",
+    name: "Triumph Recon Bot",
+    url: "https://t.me/triumphreconbot",
+    icon: "З",
+    description: "• ТриумфБот – это продвинутый UserBot, который упрощает вашу жизнь на платформе Telegram, и автоматизирует огромное количество действий."
+  },
+  {
+    category: "Зеркала",
+    name: "QuattroVPN",
+    url: "http://t.me/QuattroVPN_BOT",
+    icon: "З",
+    verified: true,
+    description: "QuattroVPN - сервис для безопасного и анонимного доступа к интернету."
+  },
+
+
 
   // Веб-архивы
   {
