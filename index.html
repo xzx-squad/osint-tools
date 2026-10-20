@@ -10,28 +10,34 @@
 </head>
 <body class="site-closed">
   <main class="maintenance-screen" id="maintenanceScreen" aria-labelledby="maintenanceTitle">
-    <section class="maintenance-panel">
-      <img class="maintenance-logo" src="logo.png" alt="">
-      <div class="maintenance-eyebrow">XZX SQUAD</div>
+    <section class="maintenance-card" role="status" aria-describedby="maintenanceMessage">
+      <div class="maintenance-header">
+        <span class="maintenance-badge">SERVICE STATUS</span>
+        <div class="maintenance-indicator" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
       <h1 id="maintenanceTitle">Сайт временно закрыт</h1>
-      <p>Мы готовим обновление. Osint-Tools снова будет доступен</p>
-      <time class="opening-date" datetime="2026-12-01">1 декабря 2026 года</time>
+      <p class="maintenance-kicker">Снова откроется</p>
+      <time class="maintenance-date" datetime="2026-12-01">1 декабря 2026 года</time>
+      <p id="maintenanceMessage">Работа сайта возобновится в указанную дату. Спасибо за ваше терпение!</p>
+      <div class="maintenance-status"><span></span> Платформа временно закрыта</div>
       <a class="maintenance-link" href="https://t.me/osintsiteopex" target="_blank" rel="noopener noreferrer">
         Следить за новостями в Telegram
       </a>
     </section>
   </main>
-
-  <div id="siteContent" hidden>
-  <div class="loading-screen" id="loadingScreen" role="status" aria-live="polite" aria-label="Loading site">
-    <div class="loading-panel">
-      <img class="loading-logo" src="logo.png" alt="">
-      <div class="loading-title">Osint-Tools</div>
-      <div class="loading-caption" data-i18n="loadingTools">Загружаем инструменты...</div>
-      <div class="loading-track" aria-hidden="true"><span></span></div>
+  <div id="siteContent" class="site-content" hidden inert aria-hidden="true">
+    <div class="loading-screen" id="loadingScreen" role="status" aria-live="polite" aria-label="Loading site">
+      <div class="loading-panel">
+        <img class="loading-logo" src="logo.png" alt="">
+        <div class="loading-title">Osint-Tools</div>
+        <div class="loading-caption" data-i18n="loadingTools">Загружаем инструменты...</div>
+        <div class="loading-track" aria-hidden="true"><span></span></div>
+      </div>
     </div>
-  </div>
-
   <header class="topbar">
     <div class="brand-wrap">
       <a class="brand" href="#">
@@ -46,8 +52,8 @@
     </a>
 
     <div class="top-actions">
-      <button class="lang-btn" id="langToggle" type="button" title="Switch language" aria-label="Switch language">EN</button>
-      <button class="icon-btn" id="themeBtn" type="button" title="Toggle theme" aria-label="Toggle theme" aria-pressed="false">☼</button>
+      <button class="lang-btn" id="langToggle" type="button" aria-label="English interface">EN</button>
+      <button class="icon-btn" id="themeBtn" type="button" title="Переключить тему" aria-label="Переключить тему" aria-pressed="false">☼</button>
       <span class="admin-link" aria-label="Beta-test">Beta-test</span>
     </div>
   </header>
@@ -85,9 +91,8 @@
       </div>
 
       <div id="catalog"></div>
-        <div class="catalog-loading hidden" id="catalogLoading" role="status" aria-live="polite"></div>
 
-        <div class="empty hidden" id="empty">
+      <div class="empty hidden" id="empty">
         <div class="empty-icon">⌕</div>
         <h3 data-i18n="emptyTitle">Ничего не найдено</h3>
         <p data-i18n="emptyText">Попробуй изменить запрос или выбрать другую категорию.</p>

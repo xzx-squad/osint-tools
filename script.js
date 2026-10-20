@@ -1,4 +1,4 @@
-﻿const TOOLS = [
+const TOOLS = [
   // Поиск и мониторинг
   {
     category: "Поиск и мониторинг",
@@ -378,38 +378,6 @@
     icon: "З",
     description: "Анализ Telegram-каналов, групп и статистики активности аудитории."
   },
-  {
-    category: "Зеркала",
-    name: "Oko Search",
-    url: "https://okosearch.com/",
-    icon: "З",
-    verified: true,
-    description: "Ищет данные по открытым источником по номеру телефона, ФИО, почта и т.д"
-  },
-  {
-    category: "Зеркала",
-    name: "Telesint",
-    url: "https://telesint.dev/",
-    icon: "З",
-    description: "Telesint - инструмент для анализа аудитории Telegram, разработанный для маркетологов и аналитиков."
-  },
-  {
-    category: "Зеркала",
-    name: "Triumph Recon Bot",
-    url: "https://t.me/triumphreconbot",
-    icon: "З",
-    description: "• ТриумфБот – это продвинутый UserBot, который упрощает вашу жизнь на платформе Telegram, и автоматизирует огромное количество действий."
-  },
-  {
-    category: "Зеркала",
-    name: "QuattroVPN",
-    url: "http://t.me/QuattroVPN_BOT",
-    icon: "З",
-    verified: true,
-    description: "QuattroVPN - сервис для безопасного и анонимного доступа к интернету."
-  },
-
-
 
   // Веб-архивы
   {
@@ -484,8 +452,7 @@ const UI_TEXT = {
     emptyTitle: "Ничего не найдено",
     emptyText: "Попробуй изменить запрос или выбрать другую категорию.",
     telegramLink: "Telegram-канал",
-    sortLabel: "A–Я",
-    loadingTools: "Загружаем инструменты..."
+    sortLabel: "A–Я"
   },
   en: {
     categories: "Categories",
@@ -497,8 +464,7 @@ const UI_TEXT = {
     emptyTitle: "Nothing found",
     emptyText: "Try a different query or choose another category.",
     telegramLink: "Telegram channel",
-    sortLabel: "A–Z",
-    loadingTools: "Loading tools..."
+    sortLabel: "A–Z"
   }
 };
 
@@ -567,7 +533,6 @@ const TOOL_DESCRIPTIONS_EN = {
   "Censys": "Search internet hosts and certificates.",
   "FindHomo": "People search and profile data discovery service.",
   "FunStat/Telelog": "Telegram channel and group analytics with audience and activity statistics.",
-  "Oko Search": "Search open-source information using a phone number, full name, email address, and more.",
   "Зеркало": "Mirror view for reading and analyzing web pages.",
   "Archive.today": "Web page archive.",
   "Wayback Machine": "Web archive."
@@ -622,11 +587,6 @@ function applyLanguage(lang) {
     }
   });
 
-  const catalogLoading = document.getElementById("catalogLoading");
-  if (catalogLoading) {
-    catalogLoading.textContent = textBundle.loadingTools;
-  }
-
   const sortBtn = document.getElementById("sortBtn");
   if (sortBtn) {
     sortBtn.textContent = textBundle.sortLabel;
@@ -650,27 +610,33 @@ const empty = document.getElementById("empty");
 const toolCount = document.getElementById("toolCount");
 const categoryCount = document.getElementById("categoryCount");
 const allCount = document.getElementById("allCount");
-const catalogLoading = document.getElementById("catalogLoading");
-const loadingScreen = document.getElementById("loadingScreen");
-const loadingStartedAt = performance.now();
 
 const categories = [...new Set(TOOLS.map(tool => tool.category))];
-const categoryCounts = TOOLS.reduce((counts, tool) => {
-  counts[tool.category] = (counts[tool.category] || 0) + 1;
-  return counts;
-}, {});
+
+function getCategoryCounts() {
+  return categories.reduce((result, category) => {
+    result[category] = TOOLS.filter(tool => tool.category === category).length;
+    return result;
+  }, {});
+}
 
 function renderCategoryNav() {
-  document.querySelector('.sidebar > .category[data-category="all"]')
-    .classList.toggle("active", state.category === "all");
+  const counts = getCategoryCounts();
 
   categoryNav.innerHTML = categories.map(category => `
     <button class="category ${state.category === category ? "active" : ""}"
             data-category="${escapeHtml(category)}">
       <span>${escapeHtml(translateCategory(category))}</span>
-      <span class="count">${categoryCounts[category]}</span>
+      <span class="count">${counts[category]}</span>
     </button>
   `).join("");
+
+  document.querySelectorAll(".category").forEach(button => {
+    button.addEventListener("click", () => {
+      state.category = button.dataset.category;
+      render();
+    });
+  });
 
   allCount.textContent = TOOLS.length;
 }
@@ -701,54 +667,7 @@ function filteredTools() {
   return result;
 }
 
-let renderVersion = 0;
-let renderFrame = 0;
-let loadingHideTimer = 0;
-const RENDER_BATCH_SIZE = 12;
-const MIN_LOADING_DURATION = 2000;
-
-function finishLoadingScreen() {
-  if (!loadingScreen || loadingHideTimer || loadingScreen.classList.contains("is-hidden")) return;
-
-  const remaining = Math.max(0, MIN_LOADING_DURATION - (performance.now() - loadingStartedAt));
-  loadingHideTimer = window.setTimeout(() => {
-    loadingScreen.classList.add("is-hidden");
-    loadingScreen.setAttribute("aria-hidden", "true");
-    loadingHideTimer = 0;
-  }, remaining);
-}
-
-function renderToolCard(tool) {
-  return `
-    <a class="tool"
-       href="${escapeAttribute(tool.url)}"
-       target="_blank"
-       rel="noopener noreferrer">
-      <div class="tool-icon">${escapeHtml(tool.icon || "⌁")}</div>
-      <div class="tool-body">
-        <div class="tool-name">
-          <span class="tool-name-text">${escapeHtml(getToolName(tool))}</span>
-          ${tool.verified ? '<img class="verified-icon" src="verifed.png" alt="Verified" title="Verified">' : ""}
-        </div>
-        <div class="tool-desc">${escapeHtml(getToolDescription(tool))}</div>
-        <div class="tool-url">${escapeHtml(new URL(tool.url).hostname)}</div>
-      </div>
-    </a>
-  `;
-}
-
 function render() {
-  const version = ++renderVersion;
-
-  if (renderFrame) {
-    cancelAnimationFrame(renderFrame);
-    renderFrame = 0;
-  }
-  if (loadingHideTimer) {
-    clearTimeout(loadingHideTimer);
-    loadingHideTimer = 0;
-  }
-
   renderCategoryNav();
 
   const tools = filteredTools();
@@ -766,54 +685,28 @@ function render() {
         <span>${items.length}</span>
       </div>
 
-      <div class="tools" data-category="${escapeAttribute(category)}"></div>
+      <div class="tools">
+        ${items.map(tool => `
+          <a class="tool"
+             href="${escapeAttribute(tool.url)}"
+             target="_blank"
+             rel="noopener noreferrer">
+            <div class="tool-icon">${escapeHtml(tool.icon || "⌁")}</div>
+            <div class="tool-body">
+              <div class="tool-name">${escapeHtml(getToolName(tool))}</div>
+              <div class="tool-desc">${escapeHtml(getToolDescription(tool))}</div>
+              <div class="tool-url">${escapeHtml(new URL(tool.url).hostname)}</div>
+            </div>
+          </a>
+        `).join("")}
+      </div>
     </section>
   `).join("");
 
   empty.classList.toggle("hidden", tools.length !== 0);
-  catalogLoading.classList.toggle("hidden", tools.length <= RENDER_BATCH_SIZE);
-  catalog.setAttribute("aria-busy", String(tools.length > RENDER_BATCH_SIZE));
 
   toolCount.textContent = tools.length;
   categoryCount.textContent = categories.length;
-
-  if (tools.length === 0) {
-    finishLoadingScreen();
-    return;
-  }
-
-  const toolContainers = new Map(
-    [...catalog.querySelectorAll(".tools")].map(container => [container.dataset.category, container])
-  );
-  let nextToolIndex = 0;
-
-  const appendBatch = () => {
-    if (version !== renderVersion) return;
-
-    const batchByCategory = new Map();
-    const batchEnd = Math.min(nextToolIndex + RENDER_BATCH_SIZE, tools.length);
-    for (; nextToolIndex < batchEnd; nextToolIndex += 1) {
-      const tool = tools[nextToolIndex];
-      const batch = batchByCategory.get(tool.category) || [];
-      batch.push(renderToolCard(tool));
-      batchByCategory.set(tool.category, batch);
-    }
-
-    batchByCategory.forEach((cards, category) => {
-      toolContainers.get(category).insertAdjacentHTML("beforeend", cards.join(""));
-    });
-
-    if (nextToolIndex < tools.length) {
-      renderFrame = requestAnimationFrame(appendBatch);
-    } else {
-      renderFrame = 0;
-      catalogLoading.classList.add("hidden");
-      catalog.setAttribute("aria-busy", "false");
-      finishLoadingScreen();
-    }
-  };
-
-  appendBatch();
 }
 
 function escapeHtml(value) {
@@ -831,13 +724,6 @@ function escapeAttribute(value) {
 
 searchInput.addEventListener("input", () => {
   state.query = searchInput.value;
-});
-
-document.querySelector(".sidebar").addEventListener("click", event => {
-  const button = event.target.closest(".category");
-  if (!button || !button.dataset.category) return;
-
-  state.category = button.dataset.category;
   render();
 });
 
@@ -874,6 +760,7 @@ document.addEventListener("keydown", event => {
   if (event.key === "Escape" && document.activeElement === searchInput) {
     searchInput.value = "";
     state.query = "";
+    render();
     searchInput.blur();
   }
 });
@@ -894,6 +781,8 @@ function updateSiteAvailability() {
 
   maintenanceScreen.hidden = true;
   siteContent.hidden = false;
+  siteContent.inert = false;
+  siteContent.removeAttribute("aria-hidden");
   document.body.classList.remove("site-closed");
   document.title = "Osint-Tools";
   pageDescription.content = "Osint-Tools — каталог инструментов сквада.";
