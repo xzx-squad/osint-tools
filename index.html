@@ -9,15 +9,23 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="loading-screen" id="loadingScreen" role="status" aria-live="polite" aria-label="Loading site">
-    <div class="loading-panel">
-      <img class="loading-logo" src="logo.png" alt="">
-      <div class="loading-title">Osint-Tools</div>
-      <div class="loading-caption" data-i18n="loadingTools">Загружаем инструменты...</div>
-      <div class="loading-track" aria-hidden="true"><span></span></div>
+  <div class="maintenance-screen" role="alertdialog" aria-modal="true" aria-labelledby="maintenanceTitle" aria-describedby="maintenanceMessage">
+    <div class="maintenance-card">
+      <div class="maintenance-header">
+        <span class="maintenance-badge">SERVICE STATUS</span>
+        <div class="maintenance-indicator" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+      <h1 id="maintenanceTitle">Сайт закрыт</h1>
+      <p class="maintenance-kicker">Примерно запуск проекта с 1 декабря 2026 года</p>
+      <p id="maintenanceMessage">Работа сайта возобновится с 1 декабря 2026 года. Спасибо за ваше терпение!</p>
+      <div class="maintenance-status"><span></span> Платформа закрыта</div>
     </div>
   </div>
-
+  <div class="site-content" inert aria-hidden="true">
   <header class="topbar">
     <div class="brand-wrap">
       <a class="brand" href="#">
@@ -32,8 +40,8 @@
     </a>
 
     <div class="top-actions">
-      <button class="lang-btn" id="langToggle" type="button" title="Switch language" aria-label="Switch language">EN</button>
-      <button class="icon-btn" id="themeBtn" type="button" title="Toggle theme" aria-label="Toggle theme" aria-pressed="false">☼</button>
+      <button class="lang-btn" id="langToggle" type="button" aria-label="English interface">EN</button>
+      <button class="icon-btn" id="themeBtn" type="button" title="Переключить тему" aria-label="Переключить тему" aria-pressed="false">☼</button>
       <span class="admin-link" aria-label="Beta-test">Beta-test</span>
     </div>
   </header>
@@ -71,9 +79,8 @@
       </div>
 
       <div id="catalog"></div>
-        <div class="catalog-loading hidden" id="catalogLoading" role="status" aria-live="polite"></div>
 
-        <div class="empty hidden" id="empty">
+      <div class="empty hidden" id="empty">
         <div class="empty-icon">⌕</div>
         <h3 data-i18n="emptyTitle">Ничего не найдено</h3>
         <p data-i18n="emptyText">Попробуй изменить запрос или выбрать другую категорию.</p>
@@ -86,7 +93,8 @@
     <span>Osint-Tools</span>
     <span>XZX SQUAD 2026</span>
   </footer>
+  </div>
 
-  <script src="script.js?v=8"></script>
+  <script src="script.js?v=4"></script>
 </body>
 </html>
