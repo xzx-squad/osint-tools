@@ -3,12 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Osint-Tools — каталог инструментов сквада.">
-  <title>Osint-Tools</title>
+  <meta id="pageDescription" name="description" content="Сайт Osint-Tools временно закрыт и откроется 1 декабря 2026 года.">
+  <title>Osint-Tools — скоро открытие</title>
   <link rel="icon" type="image/png" href="favicon.png?v=2">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=9">
 </head>
-<body>
+<body class="site-closed">
+  <main class="maintenance-screen" id="maintenanceScreen" aria-labelledby="maintenanceTitle">
+    <section class="maintenance-panel">
+      <img class="maintenance-logo" src="logo.png" alt="">
+      <div class="maintenance-eyebrow">XZX SQUAD</div>
+      <h1 id="maintenanceTitle">Сайт временно закрыт</h1>
+      <p>Мы готовим обновление. Osint-Tools снова будет доступен</p>
+      <time class="opening-date" datetime="2026-12-01">1 декабря 2026 года</time>
+      <a class="maintenance-link" href="https://t.me/osintsiteopex" target="_blank" rel="noopener noreferrer">
+        Следить за новостями в Telegram
+      </a>
+    </section>
+  </main>
+
+  <div id="siteContent" hidden>
   <div class="loading-screen" id="loadingScreen" role="status" aria-live="polite" aria-label="Loading site">
     <div class="loading-panel">
       <img class="loading-logo" src="logo.png" alt="">
@@ -86,7 +100,8 @@
     <span>Osint-Tools</span>
     <span>XZX SQUAD 2026</span>
   </footer>
+  </div>
 
-  <script src="script.js?v=8"></script>
+  <script src="script.js?v=9"></script>
 </body>
 </html>

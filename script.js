@@ -879,3 +879,24 @@ document.addEventListener("keydown", event => {
 });
 
 render();
+
+const maintenanceScreen = document.getElementById("maintenanceScreen");
+const siteContent = document.getElementById("siteContent");
+const pageDescription = document.getElementById("pageDescription");
+const openingDate = new Date(2026, 11, 1);
+
+function updateSiteAvailability() {
+  const remaining = openingDate.getTime() - Date.now();
+  if (remaining > 0) {
+    window.setTimeout(updateSiteAvailability, Math.min(remaining, 2147483647));
+    return;
+  }
+
+  maintenanceScreen.hidden = true;
+  siteContent.hidden = false;
+  document.body.classList.remove("site-closed");
+  document.title = "Osint-Tools";
+  pageDescription.content = "Osint-Tools — каталог инструментов сквада.";
+}
+
+updateSiteAvailability();
