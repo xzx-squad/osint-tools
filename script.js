@@ -770,7 +770,24 @@ render();
 const maintenanceScreen = document.getElementById("maintenanceScreen");
 const siteContent = document.getElementById("siteContent");
 const pageDescription = document.getElementById("pageDescription");
+const loadingScreen = document.getElementById("loadingScreen");
+const agreementScreen = document.getElementById("agreementScreen");
+const agreementCheckbox = document.getElementById("agreementCheckbox");
+const agreementAccept = document.getElementById("agreementAccept");
 const openingDate = new Date(2026, 11, 1);
+const SITE_LOADING_DURATION = 2000;
+
+agreementCheckbox.addEventListener("change", () => {
+  agreementAccept.disabled = !agreementCheckbox.checked;
+});
+
+agreementAccept.addEventListener("click", () => {
+  if (!agreementCheckbox.checked) return;
+  agreementScreen.hidden = true;
+  siteContent.inert = false;
+  siteContent.removeAttribute("aria-hidden");
+  document.body.classList.remove("site-closed");
+});
 
 function updateSiteAvailability() {
   const remaining = openingDate.getTime() - Date.now();
@@ -781,11 +798,17 @@ function updateSiteAvailability() {
 
   maintenanceScreen.hidden = true;
   siteContent.hidden = false;
-  siteContent.inert = false;
-  siteContent.removeAttribute("aria-hidden");
-  document.body.classList.remove("site-closed");
+  siteContent.inert = true;
+  siteContent.setAttribute("aria-hidden", "true");
   document.title = "Osint-Tools";
   pageDescription.content = "Osint-Tools — каталог инструментов сквада.";
+
+  window.setTimeout(() => {
+    agreementScreen.hidden = false;
+    agreementCheckbox.focus();
+    loadingScreen.classList.add("is-hidden");
+    loadingScreen.setAttribute("aria-hidden", "true");
+  }, SITE_LOADING_DURATION);
 }
 
 updateSiteAvailability();
