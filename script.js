@@ -378,6 +378,14 @@ const TOOLS = [
     icon: "З",
     description: "Анализ Telegram-каналов, групп и статистики активности аудитории."
   },
+  {
+    category: "Зеркала",
+    name: "Oko Search",
+    url: "https://okosearch.com/",
+    icon: "З",
+    verified: true,
+    description: "Ищет данные по открытым источником по номеру телефона, ФИО, почта и т.д"
+  },
 
   // Веб-архивы
   {
@@ -396,10 +404,36 @@ const TOOLS = [
   }
 ];
 
+const FAVORITES_STORAGE_KEY = "osint-favorites";
+const RECENT_STORAGE_KEY = "osint-recent-tools";
+
+function loadFavorites() {
+  try {
+    const savedNames = JSON.parse(localStorage.getItem(FAVORITES_STORAGE_KEY) || "[]");
+    const knownNames = new Set(TOOLS.map(tool => tool.name));
+    return new Set(Array.isArray(savedNames) ? savedNames.filter(name => knownNames.has(name)) : []);
+  } catch {
+    return new Set();
+  }
+}
+
+function loadRecentTools() {
+  try {
+    const savedNames = JSON.parse(localStorage.getItem(RECENT_STORAGE_KEY) || "[]");
+    const knownNames = new Set(TOOLS.map(tool => tool.name));
+    return Array.isArray(savedNames) ? savedNames.filter(name => knownNames.has(name)).slice(0, 5) : [];
+  } catch {
+    return [];
+  }
+}
+
 const state = {
   category: "all",
+  view: "cards",
   query: "",
-  alphabetical: true
+  alphabetical: true,
+  favorites: loadFavorites(),
+  recent: loadRecentTools()
 };
 
 const CATEGORY_TRANSLATIONS = {
@@ -445,28 +479,111 @@ const UI_TEXT = {
   ru: {
     categories: "Категории",
     allTools: "Все инструменты",
-    heroText: "Лёгкий каталог инструментов для команды.",
+    viewCards: "Карточки",
+    viewFolders: "Папки",
+    backToFolders: "Все папки",
+    folderToolCount: "инструментов",
+    favorites: "Избранное",
+    addFavorite: "Добавить в избранное",
+    removeFavorite: "Убрать из избранного",
+    recentlyOpened: "Недавно открытые",
+    clearRecent: "Очистить",
+    heroText: "Каталог инструментов OSINT.",
     toolsText: "инструментов",
     categoriesText: "категорий",
     searchPlaceholder: "Поиск инструмента...",
     emptyTitle: "Ничего не найдено",
     emptyText: "Попробуй изменить запрос или выбрать другую категорию.",
+    emptyFavoritesTitle: "Избранное пока пусто",
+    emptyFavoritesText: "Сохраняй полезные инструменты здесь, чтобы быстро находить их позже.",
     telegramLink: "Telegram-канал",
-    sortLabel: "A–Я"
+    sortAlphabetical: "А–Я",
+    sortOriginal: "По добавлению",
+    loadingTools: "Загружаем инструменты..."
   },
   en: {
     categories: "Categories",
     allTools: "All tools",
+    viewCards: "Cards",
+    viewFolders: "Folders",
+    backToFolders: "All folders",
+    folderToolCount: "tools",
+    favorites: "Favorites",
+    addFavorite: "Add to favorites",
+    removeFavorite: "Remove from favorites",
+    recentlyOpened: "Recently opened",
+    clearRecent: "Clear",
     heroText: "A lightweight OSINT tool catalog for the team.",
     toolsText: "tools",
     categoriesText: "categories",
     searchPlaceholder: "Search tool...",
     emptyTitle: "Nothing found",
     emptyText: "Try a different query or choose another category.",
+    emptyFavoritesTitle: "No favorites yet",
+    emptyFavoritesText: "Save useful tools here to find them quickly later.",
     telegramLink: "Telegram channel",
-    sortLabel: "A–Z"
+    sortAlphabetical: "A–Z",
+    sortOriginal: "As added",
+    loadingTools: "Loading tools..."
   }
 };
+
+const LOADING_FACTS = [
+  {
+    ru: "OSINT — это сбор и анализ информации из открытых источников.",
+    en: "OSINT is the collection and analysis of information from open sources."
+  },
+  {
+    ru: "Метаданные фото иногда содержат модель камеры, дату съёмки и координаты.",
+    en: "Photo metadata can sometimes include the camera model, capture date, and coordinates."
+  },
+  {
+    ru: "Веб-архивы помогают находить сохранённые копии страниц прошлых лет.",
+    en: "Web archives can help find saved copies of pages from previous years."
+  },
+  {
+    ru: "DNS связывает доменные имена с техническими записями, например IP-адресами.",
+    en: "DNS links domain names to technical records, such as IP addresses."
+  },
+  {
+    ru: "Хеш файла помогает проверить, совпадает ли его содержимое с известной копией.",
+    en: "A file hash can help verify whether its contents match a known copy."
+  },
+  {
+    ru: "Поиск по изображению помогает находить похожие публикации, но сам по себе не доказывает источник.",
+    en: "Reverse image search can find similar posts, but does not by itself prove the source."
+  }
+];
+
+function chooseLoadingFactIndex() {
+  const storageKey = "osint-loading-fact";
+  const randomIndex = () => Math.floor(Math.random() * LOADING_FACTS.length);
+
+  try {
+    const previousIndex = Number(sessionStorage.getItem(storageKey));
+    let nextIndex = randomIndex();
+
+    if (Number.isInteger(previousIndex) && previousIndex >= 0 &&
+        previousIndex < LOADING_FACTS.length && LOADING_FACTS.length > 1) {
+      nextIndex = Math.floor(Math.random() * (LOADING_FACTS.length - 1));
+      if (nextIndex >= previousIndex) nextIndex += 1;
+    }
+
+    sessionStorage.setItem(storageKey, String(nextIndex));
+    return nextIndex;
+  } catch (error) {
+    if (error instanceof DOMException && error.name === "SecurityError") {
+      return randomIndex();
+    }
+    throw error;
+  }
+}
+
+const loadingFactIndex = chooseLoadingFactIndex();
+const easterEggToast = document.getElementById("easterEggToast");
+const easterEggTitle = document.getElementById("easterEggTitle");
+const easterEggMessage = document.getElementById("easterEggMessage");
+const easterEggClose = document.getElementById("easterEggClose");
 
 const TOOL_NAMES_EN = {
   "Автокод": "Avtocod",
@@ -533,6 +650,7 @@ const TOOL_DESCRIPTIONS_EN = {
   "Censys": "Search internet hosts and certificates.",
   "FindHomo": "People search and profile data discovery service.",
   "FunStat/Telelog": "Telegram channel and group analytics with audience and activity statistics.",
+  "Oko Search": "Search open-source information using a phone number, full name, email address, and more.",
   "Зеркало": "Mirror view for reading and analyzing web pages.",
   "Archive.today": "Web page archive.",
   "Wayback Machine": "Web archive."
@@ -562,6 +680,17 @@ function translateCategory(category) {
   return CATEGORY_TRANSLATIONS[getCurrentLanguage()][category] || category;
 }
 
+function toolCountWord(count) {
+  if (getCurrentLanguage() === "en") return count === 1 ? "tool" : "tools";
+
+  const lastTwoDigits = count % 100;
+  const lastDigit = count % 10;
+  if (lastTwoDigits >= 11 && lastTwoDigits <= 14) return "инструментов";
+  if (lastDigit === 1) return "инструмент";
+  if (lastDigit >= 2 && lastDigit <= 4) return "инструмента";
+  return "инструментов";
+}
+
 function applyLanguage(lang) {
   const textBundle = UI_TEXT[lang] || UI_TEXT.ru;
 
@@ -587,10 +716,17 @@ function applyLanguage(lang) {
     }
   });
 
-  const sortBtn = document.getElementById("sortBtn");
-  if (sortBtn) {
-    sortBtn.textContent = textBundle.sortLabel;
+  const catalogLoading = document.getElementById("catalogLoading");
+  if (catalogLoading) {
+    catalogLoading.textContent = textBundle.loadingTools;
   }
+
+  const loadingFact = document.getElementById("loadingFact");
+  if (loadingFact) {
+    loadingFact.textContent = LOADING_FACTS[loadingFactIndex][lang] || LOADING_FACTS[loadingFactIndex].ru;
+  }
+
+  updateSortButton();
 
   const themeBtn = document.getElementById("themeBtn");
   if (themeBtn) {
@@ -610,43 +746,44 @@ const empty = document.getElementById("empty");
 const toolCount = document.getElementById("toolCount");
 const categoryCount = document.getElementById("categoryCount");
 const allCount = document.getElementById("allCount");
+const favoritesCount = document.getElementById("favoritesCount");
+const favoritesToggle = document.getElementById("favoritesToggle");
+const recentSection = document.getElementById("recentSection");
+const recentToolsContainer = document.getElementById("recentTools");
+const catalogLoading = document.getElementById("catalogLoading");
+const loadingScreen = document.getElementById("loadingScreen");
 
 const categories = [...new Set(TOOLS.map(tool => tool.category))];
-
-function getCategoryCounts() {
-  return categories.reduce((result, category) => {
-    result[category] = TOOLS.filter(tool => tool.category === category).length;
-    return result;
-  }, {});
-}
+const categoryCounts = TOOLS.reduce((counts, tool) => {
+  counts[tool.category] = (counts[tool.category] || 0) + 1;
+  return counts;
+}, {});
 
 function renderCategoryNav() {
-  const counts = getCategoryCounts();
+  document.querySelector('.sidebar > .category[data-category="all"]')
+    .classList.toggle("active", state.category === "all");
+  favoritesToggle.setAttribute("aria-pressed", String(state.category === "favorites"));
 
   categoryNav.innerHTML = categories.map(category => `
     <button class="category ${state.category === category ? "active" : ""}"
             data-category="${escapeHtml(category)}">
       <span>${escapeHtml(translateCategory(category))}</span>
-      <span class="count">${counts[category]}</span>
+      <span class="count">${categoryCounts[category]}</span>
     </button>
   `).join("");
 
-  document.querySelectorAll(".category").forEach(button => {
-    button.addEventListener("click", () => {
-      state.category = button.dataset.category;
-      render();
-    });
-  });
-
   allCount.textContent = TOOLS.length;
+  favoritesCount.textContent = state.favorites.size;
 }
 
 function filteredTools() {
   const query = state.query.toLowerCase().trim();
 
   let result = TOOLS.filter(tool => {
-    const categoryMatch =
-      state.category === "all" || tool.category === state.category;
+    const categoryMatch = state.category === "all" ||
+      (state.category === "favorites"
+        ? state.favorites.has(tool.name)
+        : tool.category === state.category);
 
     const searchMatch =
       !query ||
@@ -667,7 +804,67 @@ function filteredTools() {
   return result;
 }
 
+let renderVersion = 0;
+let renderFrame = 0;
+const RENDER_BATCH_SIZE = 12;
+
+function finishLoadingScreen() {
+  if (!loadingScreen || loadingScreen.classList.contains("is-hidden")) return;
+
+  window.showAgreementScreen();
+  loadingScreen.classList.add("is-hidden");
+  loadingScreen.setAttribute("aria-hidden", "true");
+}
+
+function renderToolCard(tool) {
+  const isFavorite = state.favorites.has(tool.name);
+  const favoriteLabel = isFavorite ? UI_TEXT[getCurrentLanguage()].removeFavorite : UI_TEXT[getCurrentLanguage()].addFavorite;
+
+  return `
+    <article class="tool">
+      <a class="tool-link"
+         href="${escapeAttribute(tool.url)}"
+        data-tool-name="${escapeAttribute(tool.name)}"
+         target="_blank"
+         rel="noopener noreferrer">
+        <div class="tool-icon">${escapeHtml(tool.icon || "⌁")}</div>
+        <div class="tool-body">
+          <div class="tool-name">
+            <span class="tool-name-text">${escapeHtml(getToolName(tool))}</span>
+            ${tool.verified ? '<img class="verified-icon" src="verifed.png" alt="Verified" title="Verified">' : ""}
+          </div>
+          <div class="tool-desc">${escapeHtml(getToolDescription(tool))}</div>
+          <div class="tool-url">${escapeHtml(new URL(tool.url).hostname)}</div>
+        </div>
+      </a>
+      <button class="favorite-btn${isFavorite ? " is-favorite" : ""}"
+              type="button"
+              data-favorite="${escapeAttribute(tool.name)}"
+              aria-label="${escapeAttribute(favoriteLabel)}"
+              aria-pressed="${isFavorite}"
+              title="${escapeAttribute(favoriteLabel)}"><span aria-hidden="true">${isFavorite ? "★" : "☆"}</span></button>
+    </article>
+  `;
+}
+
+function renderRecentTools() {
+  const recentItems = state.recent
+    .map(name => TOOLS.find(tool => tool.name === name))
+    .filter(Boolean);
+  const shouldShow = recentItems.length > 0 && !state.query.trim() && state.category === "all";
+
+  recentSection.hidden = !shouldShow;
+  recentToolsContainer.innerHTML = shouldShow ? recentItems.map(renderToolCard).join("") : "";
+}
+
 function render() {
+  const version = ++renderVersion;
+
+  if (renderFrame) {
+    cancelAnimationFrame(renderFrame);
+    renderFrame = 0;
+  }
+  renderRecentTools();
   renderCategoryNav();
 
   const tools = filteredTools();
@@ -678,35 +875,99 @@ function render() {
     grouped[tool.category].push(tool);
   });
 
-  catalog.innerHTML = Object.entries(grouped).map(([category, items]) => `
-    <section class="category-block">
-      <div class="category-heading">
-        <h2>${escapeHtml(translateCategory(category))}</h2>
-        <span>${items.length}</span>
-      </div>
+  const viewButtons = [
+    [document.getElementById("cardsViewBtn"), "cards"],
+    [document.getElementById("foldersViewBtn"), "folders"]
+  ];
+  viewButtons.forEach(([button, view]) => {
+    button.classList.toggle("active", state.view === view);
+    button.setAttribute("aria-pressed", String(state.view === view));
+  });
 
-      <div class="tools">
-        ${items.map(tool => `
-          <a class="tool"
-             href="${escapeAttribute(tool.url)}"
-             target="_blank"
-             rel="noopener noreferrer">
-            <div class="tool-icon">${escapeHtml(tool.icon || "⌁")}</div>
-            <div class="tool-body">
-              <div class="tool-name">${escapeHtml(getToolName(tool))}</div>
-              <div class="tool-desc">${escapeHtml(getToolDescription(tool))}</div>
-              <div class="tool-url">${escapeHtml(new URL(tool.url).hostname)}</div>
-            </div>
-          </a>
-        `).join("")}
-      </div>
-    </section>
-  `).join("");
+  const showFolderGrid = state.view === "folders" && state.category === "all";
+
+  if (showFolderGrid) {
+    const textBundle = UI_TEXT[getCurrentLanguage()] || UI_TEXT.ru;
+    catalog.innerHTML = `<div class="folder-grid">${Object.entries(grouped).map(([category, items]) => `
+      <button class="folder-card" type="button" data-folder-category="${escapeAttribute(category)}">
+        <span class="folder-art" aria-hidden="true"><span></span></span>
+        <span class="folder-card-copy">
+          <strong>${escapeHtml(translateCategory(category))}</strong>
+          <span>${items.length} ${toolCountWord(items.length)}</span>
+        </span>
+        <span class="folder-open-mark" aria-hidden="true">›</span>
+      </button>
+    `).join("")}</div>`;
+  } else {
+    const backButton = state.view === "folders" && state.category !== "favorites"
+      ? `<button class="folder-back" type="button" data-folder-back><span aria-hidden="true">←</span> ${UI_TEXT[getCurrentLanguage()].backToFolders}</button>`
+      : "";
+    catalog.innerHTML = backButton + Object.entries(grouped).map(([category, items]) => `
+      <section class="category-block">
+        <div class="category-heading">
+          <h2>${escapeHtml(translateCategory(category))}</h2>
+          <span>${items.length}</span>
+        </div>
+
+        <div class="tools" data-category="${escapeAttribute(category)}"></div>
+      </section>
+    `).join("");
+  }
 
   empty.classList.toggle("hidden", tools.length !== 0);
+  const textBundle = UI_TEXT[getCurrentLanguage()] || UI_TEXT.ru;
+  const showEmptyFavorites = state.category === "favorites" && state.favorites.size === 0 && !state.query.trim();
+  empty.querySelector("h3").textContent = showEmptyFavorites ? textBundle.emptyFavoritesTitle : textBundle.emptyTitle;
+  empty.querySelector("p").textContent = showEmptyFavorites ? textBundle.emptyFavoritesText : textBundle.emptyText;
+  catalogLoading.classList.toggle("hidden", showFolderGrid || tools.length <= RENDER_BATCH_SIZE);
+  catalog.setAttribute("aria-busy", String(!showFolderGrid && tools.length > RENDER_BATCH_SIZE));
 
   toolCount.textContent = tools.length;
-  categoryCount.textContent = categories.length;
+  toolCount.nextElementSibling.textContent = toolCountWord(tools.length);
+  categoryCount.textContent = new Set(tools.map(tool => tool.category)).size;
+
+  if (tools.length === 0) {
+    finishLoadingScreen();
+    return;
+  }
+
+  if (showFolderGrid) {
+    finishLoadingScreen();
+    return;
+  }
+
+  const toolContainers = new Map(
+    [...catalog.querySelectorAll(".tools")].map(container => [container.dataset.category, container])
+  );
+  let nextToolIndex = 0;
+
+  const appendBatch = () => {
+    if (version !== renderVersion) return;
+
+    const batchByCategory = new Map();
+    const batchEnd = Math.min(nextToolIndex + RENDER_BATCH_SIZE, tools.length);
+    for (; nextToolIndex < batchEnd; nextToolIndex += 1) {
+      const tool = tools[nextToolIndex];
+      const batch = batchByCategory.get(tool.category) || [];
+      batch.push(renderToolCard(tool));
+      batchByCategory.set(tool.category, batch);
+    }
+
+    batchByCategory.forEach((cards, category) => {
+      toolContainers.get(category).insertAdjacentHTML("beforeend", cards.join(""));
+    });
+
+    if (nextToolIndex < tools.length) {
+      renderFrame = requestAnimationFrame(appendBatch);
+    } else {
+      renderFrame = 0;
+      catalogLoading.classList.add("hidden");
+      catalog.setAttribute("aria-busy", "false");
+      finishLoadingScreen();
+    }
+  };
+
+  appendBatch();
 }
 
 function escapeHtml(value) {
@@ -722,8 +983,118 @@ function escapeAttribute(value) {
   return escapeHtml(value);
 }
 
+function updateSortButton() {
+  const sortBtn = document.getElementById("sortBtn");
+  if (!sortBtn) return;
+
+  const textBundle = UI_TEXT[getCurrentLanguage()] || UI_TEXT.ru;
+  sortBtn.textContent = state.alphabetical ? textBundle.sortAlphabetical : textBundle.sortOriginal;
+}
+
+function updateFavoriteButton(button, isFavorite) {
+  const textBundle = UI_TEXT[getCurrentLanguage()] || UI_TEXT.ru;
+  const label = isFavorite ? textBundle.removeFavorite : textBundle.addFavorite;
+  button.classList.toggle("is-favorite", isFavorite);
+  button.setAttribute("aria-label", label);
+  button.setAttribute("aria-pressed", String(isFavorite));
+  button.title = label;
+  button.querySelector("span").textContent = isFavorite ? "★" : "☆";
+}
+
+function recordRecentTool(toolName) {
+  state.recent = [toolName, ...state.recent.filter(name => name !== toolName)].slice(0, 5);
+  try {
+    localStorage.setItem(RECENT_STORAGE_KEY, JSON.stringify(state.recent));
+  } catch {}
+
+  requestAnimationFrame(renderRecentTools);
+}
+
 searchInput.addEventListener("input", () => {
   state.query = searchInput.value;
+  render();
+});
+
+document.querySelector(".sidebar").addEventListener("click", event => {
+  const button = event.target.closest(".category");
+  if (!button || !button.dataset.category) return;
+
+  state.category = button.dataset.category;
+  render();
+});
+
+favoritesToggle.addEventListener("click", () => {
+  state.category = state.category === "favorites" ? "all" : "favorites";
+  render();
+});
+
+function handleToolCardClick(event) {
+  const link = event.target.closest(".tool-link");
+  if (link) {
+    recordRecentTool(link.dataset.toolName);
+    return;
+  }
+
+  const button = event.target.closest(".favorite-btn");
+  if (!button) return;
+
+  const toolName = button.dataset.favorite;
+  const isFavorite = !state.favorites.has(toolName);
+  if (isFavorite) {
+    state.favorites.add(toolName);
+  } else {
+    state.favorites.delete(toolName);
+  }
+
+  try {
+    localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify([...state.favorites]));
+  } catch {}
+
+  favoritesCount.textContent = state.favorites.size;
+  updateFavoriteButton(button, isFavorite);
+  if (state.category === "favorites") {
+    render();
+  }
+}
+
+catalog.addEventListener("click", handleToolCardClick);
+catalog.addEventListener("click", event => {
+  const folder = event.target.closest("[data-folder-category]");
+  if (folder) {
+    state.category = folder.dataset.folderCategory;
+    render();
+    return;
+  }
+
+  if (event.target.closest("[data-folder-back]")) {
+    state.category = "all";
+    render();
+  }
+});
+recentToolsContainer.addEventListener("click", handleToolCardClick);
+
+document.getElementById("clearRecent").addEventListener("click", () => {
+  state.recent = [];
+  try {
+    localStorage.removeItem(RECENT_STORAGE_KEY);
+  } catch {}
+  renderRecentTools();
+});
+
+document.getElementById("sortBtn").addEventListener("click", () => {
+  state.alphabetical = !state.alphabetical;
+  updateSortButton();
+  render();
+});
+
+document.getElementById("cardsViewBtn").addEventListener("click", () => {
+  state.view = "cards";
+  render();
+});
+
+document.getElementById("foldersViewBtn").addEventListener("click", () => {
+  state.view = "folders";
+  state.category = "all";
   render();
 });
 
@@ -751,7 +1122,400 @@ if (localStorage.getItem("osint-theme") === "light") {
   themeBtn.setAttribute("aria-pressed", "true");
 }
 
+const OSINT_GAME_ROUNDS = [
+  {
+    id: "wayback",
+    question: {
+      ru: "Старая страница исчезла. Где искать сохранённую копию сайта?",
+      en: "An old page disappeared. Where can you look for a saved copy?"
+    },
+    answers: [
+      { ru: "Wayback Machine", en: "Wayback Machine" },
+      { ru: "Shodan", en: "Shodan" },
+      { ru: "ExifTool", en: "ExifTool" }
+    ],
+    correctIndex: 0,
+    explanation: {
+      ru: "Wayback Machine хранит снимки страниц из веб-архива.",
+      en: "Wayback Machine stores snapshots of pages in a web archive."
+    }
+  },
+  {
+    id: "exiftool",
+    question: {
+      ru: "На фото могут остаться дата съёмки и модель камеры. Чем проверить метаданные?",
+      en: "A photo may retain its capture date and camera model. Which tool checks its metadata?"
+    },
+    answers: [
+      { ru: "OpenStreetMap", en: "OpenStreetMap" },
+      { ru: "ExifTool", en: "ExifTool" },
+      { ru: "Hunter", en: "Hunter" }
+    ],
+    correctIndex: 1,
+    explanation: {
+      ru: "ExifTool читает метаданные файлов, если они сохранились.",
+      en: "ExifTool reads file metadata when it is present."
+    }
+  },
+  {
+    id: "censys",
+    question: {
+      ru: "Нужно изучить публичные TLS-сертификаты и связанные с доменом хосты. Что выбрать?",
+      en: "You need to inspect public TLS certificates and hosts associated with a domain. What should you use?"
+    },
+    answers: [
+      { ru: "Censys", en: "Censys" },
+      { ru: "Archive.today", en: "Archive.today" },
+      { ru: "Obsidian", en: "Obsidian" }
+    ],
+    correctIndex: 0,
+    explanation: {
+      ru: "Censys индексирует публичные интернет-хосты и TLS-сертификаты.",
+      en: "Censys indexes publicly visible internet hosts and TLS certificates."
+    }
+  },
+  {
+    id: "hunter",
+    question: {
+      ru: "Есть домен компании; нужно найти публично указанные рабочие email-адреса. Какой сервис подойдёт?",
+      en: "You have a company domain and need to find publicly listed work email addresses. Which service fits?"
+    },
+    answers: [
+      { ru: "Hunter", en: "Hunter" },
+      { ru: "Censys", en: "Censys" },
+      { ru: "ExifTool", en: "ExifTool" }
+    ],
+    correctIndex: 0,
+    explanation: {
+      ru: "Hunter помогает находить публичные рабочие контакты по домену.",
+      en: "Hunter helps find publicly listed work contacts by domain."
+    }
+  },
+  {
+    id: "virustotal",
+    question: {
+      ru: "Нужно проверить репутацию URL по результатам нескольких источников безопасности. Что выбрать?",
+      en: "You need reputation signals for a URL from multiple security sources. What should you use?"
+    },
+    answers: [
+      { ru: "VirusTotal", en: "VirusTotal" },
+      { ru: "OpenCorporates", en: "OpenCorporates" },
+      { ru: "Wayback Machine", en: "Wayback Machine" }
+    ],
+    correctIndex: 0,
+    explanation: {
+      ru: "VirusTotal собирает сигналы о файлах и URL из разных источников.",
+      en: "VirusTotal aggregates signals about files and URLs from multiple sources."
+    }
+  },
+  {
+    id: "opencorporates",
+    question: {
+      ru: "Где искать публичные регистрационные сведения о компании из разных юрисдикций?",
+      en: "Where can you look up public company registration records across jurisdictions?"
+    },
+    answers: [
+      { ru: "OpenCorporates", en: "OpenCorporates" },
+      { ru: "OpenStreetMap", en: "OpenStreetMap" },
+      { ru: "Google Scholar", en: "Google Scholar" }
+    ],
+    correctIndex: 0,
+    explanation: {
+      ru: "OpenCorporates собирает открытые данные о компаниях и реестрах.",
+      en: "OpenCorporates aggregates open company and registry data."
+    }
+  },
+  {
+    id: "openstreetmap",
+    question: {
+      ru: "Есть координаты места. Как посмотреть улицы и объекты рядом на открытой карте?",
+      en: "You have coordinates for a place. Which open map can show nearby streets and features?"
+    },
+    answers: [
+      { ru: "OpenStreetMap", en: "OpenStreetMap" },
+      { ru: "Hunter", en: "Hunter" },
+      { ru: "Archive.today", en: "Archive.today" }
+    ],
+    correctIndex: 0,
+    explanation: {
+      ru: "OpenStreetMap — открытая карта с улицами и географическими объектами.",
+      en: "OpenStreetMap is an open map of streets and geographic features."
+    }
+  },
+  {
+    id: "scholar",
+    question: {
+      ru: "Нужно найти научные публикации и авторов по теме. Какой поисковик подойдёт?",
+      en: "You need research papers and authors on a topic. Which search service fits?"
+    },
+    answers: [
+      { ru: "Google Scholar", en: "Google Scholar" },
+      { ru: "Shodan", en: "Shodan" },
+      { ru: "Truecaller", en: "Truecaller" }
+    ],
+    correctIndex: 0,
+    explanation: {
+      ru: "Google Scholar индексирует научные работы и сведения об авторах.",
+      en: "Google Scholar indexes academic works and author information."
+    }
+  }
+];
+
+let osintGameRounds = [];
+let previousOsintGameOrder = "";
+
+function shuffleOsintGameRounds() {
+  const rounds = [...OSINT_GAME_ROUNDS];
+
+  for (let index = rounds.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(Math.random() * (index + 1));
+    [rounds[index], rounds[swapIndex]] = [rounds[swapIndex], rounds[index]];
+  }
+
+  let order = rounds.map(round => round.id).join(",");
+  if (rounds.length > 1 && order === previousOsintGameOrder) {
+    rounds.push(rounds.shift());
+    order = rounds.map(round => round.id).join(",");
+  }
+  previousOsintGameOrder = order;
+  return rounds;
+}
+
+const osintGameScreen = document.getElementById("osintGameScreen");
+const osintGameTitle = document.getElementById("osintGameTitle");
+const osintGameEyebrow = document.getElementById("osintGameEyebrow");
+const osintGameRound = document.getElementById("osintGameRound");
+const osintGameScore = document.getElementById("osintGameScore");
+const osintGameProgress = document.getElementById("osintGameProgress");
+const osintGameQuestion = document.getElementById("osintGameQuestion");
+const osintGameChoices = document.getElementById("osintGameChoices");
+const osintGameFeedback = document.getElementById("osintGameFeedback");
+const osintGameNext = document.getElementById("osintGameNext");
+const osintGameClose = document.getElementById("osintGameClose");
+const doxSequence = ["KeyD", "KeyO", "KeyX"];
+const swatSequence = ["KeyS", "KeyW", "KeyA", "KeyT"];
+const osintSequence = ["KeyO", "KeyS", "KeyI", "KeyN", "KeyT"];
+const konamiSequence = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "KeyB", "KeyA"];
+let doxSequenceIndex = 0;
+let swatSequenceIndex = 0;
+let osintSequenceIndex = 0;
+let easterEggSequenceIndex = 0;
+let osintGameRoundIndex = 0;
+let osintGamePoints = 0;
+let osintGameAnswered = false;
+let osintGameFinished = false;
+let osintGameReturnFocus = null;
+
+function gameText(value) {
+  return value[getCurrentLanguage()] || value.ru;
+}
+
+function updateOsintGameScore() {
+  const lang = getCurrentLanguage();
+  osintGameScore.textContent = lang === "en" ? `Score ${osintGamePoints}` : `Очки ${osintGamePoints}`;
+}
+
+function renderOsintGameRound() {
+  const lang = getCurrentLanguage();
+  const round = osintGameRounds[osintGameRoundIndex];
+  osintGameTitle.textContent = lang === "en" ? "Open-source trail" : "Следы в открытых источниках";
+  osintGameEyebrow.textContent = lang === "en" ? "OSINT / FIELD TEST" : "OSINT / ПОЛЕВАЯ ПРОВЕРКА";
+  osintGameRound.textContent = lang === "en"
+    ? `CASE ${String(osintGameRoundIndex + 1).padStart(2, "0")} / ${String(osintGameRounds.length).padStart(2, "0")}`
+    : `ДОСЬЕ ${String(osintGameRoundIndex + 1).padStart(2, "0")} / ${String(osintGameRounds.length).padStart(2, "0")}`;
+  osintGameQuestion.textContent = gameText(round.question);
+  osintGameChoices.innerHTML = round.answers.map((answer, index) => `
+    <button class="game-choice" type="button" data-choice="${index}">
+      <span class="game-choice-key">0${index + 1}</span>
+      <span>${escapeHtml(gameText(answer))}</span>
+    </button>
+  `).join("");
+  osintGameFeedback.hidden = true;
+  osintGameNext.hidden = true;
+  osintGameNext.textContent = lang === "en" ? "Next" : "Дальше";
+  osintGameProgress.style.width = `${(osintGameRoundIndex / osintGameRounds.length) * 100}%`;
+  osintGameAnswered = false;
+  updateOsintGameScore();
+}
+
+function openOsintGame() {
+  const siteShell = document.getElementById("siteShell");
+  osintGameReturnFocus = document.activeElement;
+  osintGameRounds = shuffleOsintGameRounds();
+  osintGameRoundIndex = 0;
+  osintGamePoints = 0;
+  osintGameFinished = false;
+  renderOsintGameRound();
+  osintGameScreen.hidden = false;
+  document.body.classList.add("game-open");
+  siteShell.inert = true;
+  siteShell.setAttribute("aria-hidden", "true");
+  osintGameClose.setAttribute("aria-label", getCurrentLanguage() === "en" ? "Close game" : "Закрыть игру");
+  osintGameChoices.querySelector(".game-choice")?.focus();
+}
+
+function closeOsintGame() {
+  const siteShell = document.getElementById("siteShell");
+  osintGameScreen.hidden = true;
+  document.body.classList.remove("game-open");
+  siteShell.inert = false;
+  siteShell.removeAttribute("aria-hidden");
+
+  if (osintGameReturnFocus instanceof HTMLElement && osintGameReturnFocus !== document.body && osintGameReturnFocus.isConnected) {
+    osintGameReturnFocus.focus();
+  } else {
+    document.querySelector(".brand").focus();
+  }
+}
+
+function chooseOsintGameAnswer(index) {
+  if (osintGameAnswered || osintGameFinished) return;
+
+  const lang = getCurrentLanguage();
+  const round = osintGameRounds[osintGameRoundIndex];
+  const correct = index === round.correctIndex;
+  osintGameAnswered = true;
+  if (correct) osintGamePoints += 1;
+
+  [...osintGameChoices.querySelectorAll(".game-choice")].forEach((button, buttonIndex) => {
+    button.disabled = true;
+    if (buttonIndex === round.correctIndex) button.classList.add("is-correct");
+    if (buttonIndex === index && !correct) button.classList.add("is-wrong");
+  });
+
+  osintGameFeedback.textContent = `${correct
+    ? (lang === "en" ? "Correct." : "Верно.")
+    : (lang === "en" ? "Not quite." : "Не совсем.")} ${gameText(round.explanation)}`;
+  osintGameFeedback.hidden = false;
+  osintGameProgress.style.width = `${((osintGameRoundIndex + 1) / osintGameRounds.length) * 100}%`;
+  osintGameNext.textContent = osintGameRoundIndex === osintGameRounds.length - 1
+    ? (lang === "en" ? "Results" : "Результат")
+    : (lang === "en" ? "Next" : "Дальше");
+  osintGameNext.hidden = false;
+  updateOsintGameScore();
+  osintGameNext.focus();
+}
+
+function advanceOsintGame() {
+  if (osintGameFinished) {
+    osintGameRounds = shuffleOsintGameRounds();
+    osintGameRoundIndex = 0;
+    osintGamePoints = 0;
+    osintGameFinished = false;
+    renderOsintGameRound();
+    osintGameChoices.querySelector(".game-choice")?.focus();
+    return;
+  }
+
+  if (osintGameRoundIndex < osintGameRounds.length - 1) {
+    osintGameRoundIndex += 1;
+    renderOsintGameRound();
+    osintGameChoices.querySelector(".game-choice")?.focus();
+    return;
+  }
+
+  const lang = getCurrentLanguage();
+  osintGameFinished = true;
+  osintGameTitle.textContent = lang === "en" ? "Case closed" : "Дело раскрыто";
+  osintGameRound.textContent = lang === "en" ? "RESULT" : "ИТОГ";
+  osintGameQuestion.textContent = lang === "en"
+    ? `You identified ${osintGamePoints} of ${osintGameRounds.length} tools.`
+    : `Ты правильно определил(а) ${osintGamePoints} из ${osintGameRounds.length} инструментов.`;
+  osintGameChoices.innerHTML = "";
+  osintGameFeedback.hidden = true;
+  osintGameProgress.style.width = "100%";
+  osintGameNext.textContent = lang === "en" ? "Play again" : "Сыграть ещё";
+  updateOsintGameScore();
+  osintGameNext.focus();
+}
+
+osintGameChoices.addEventListener("click", event => {
+  const choice = event.target.closest(".game-choice");
+  if (choice) chooseOsintGameAnswer(Number(choice.dataset.choice));
+});
+
+osintGameNext.addEventListener("click", advanceOsintGame);
+osintGameClose.addEventListener("click", closeOsintGame);
+osintGameScreen.addEventListener("click", event => {
+  if (event.target === osintGameScreen) closeOsintGame();
+});
+
 document.addEventListener("keydown", event => {
+  if (!osintGameScreen.hidden) {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      closeOsintGame();
+    } else if (!osintGameAnswered && /^[1-3]$/.test(event.key)) {
+      event.preventDefault();
+      chooseOsintGameAnswer(Number(event.key) - 1);
+    } else if (osintGameAnswered && event.key === "Enter") {
+      event.preventDefault();
+      advanceOsintGame();
+    }
+    return;
+  }
+
+  if (easterEggToast.classList.contains("is-warning")) {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      closeEasterEggWarning();
+      return;
+    }
+    if (event.key === "Tab") {
+      event.preventDefault();
+      easterEggClose.focus();
+      return;
+    }
+  }
+
+  const typingTarget = event.target instanceof HTMLElement &&
+    (event.target.isContentEditable || ["INPUT", "TEXTAREA", "SELECT"].includes(event.target.tagName));
+
+  if (typingTarget) {
+    easterEggSequenceIndex = 0;
+    doxSequenceIndex = 0;
+    swatSequenceIndex = 0;
+    osintSequenceIndex = 0;
+  } else if (!["Shift", "Control", "Alt", "Meta"].includes(event.key)) {
+    const expectedDoxKey = doxSequence[doxSequenceIndex];
+    doxSequenceIndex = event.code === expectedDoxKey
+      ? doxSequenceIndex + 1
+      : (event.code === doxSequence[0] ? 1 : 0);
+
+    if (doxSequenceIndex === doxSequence.length) {
+      doxSequenceIndex = 0;
+      showEasterEgg("dox");
+    }
+
+    const expectedSwatKey = swatSequence[swatSequenceIndex];
+    swatSequenceIndex = event.code === expectedSwatKey
+      ? swatSequenceIndex + 1
+      : (event.code === swatSequence[0] ? 1 : 0);
+
+    if (swatSequenceIndex === swatSequence.length) {
+      swatSequenceIndex = 0;
+      showEasterEgg("swat");
+    }
+
+    const expectedOsintKey = osintSequence[osintSequenceIndex];
+    osintSequenceIndex = event.code === expectedOsintKey
+      ? osintSequenceIndex + 1
+      : (event.code === osintSequence[0] ? 1 : 0);
+
+    if (osintSequenceIndex === osintSequence.length) {
+      osintSequenceIndex = 0;
+      openOsintGame();
+    }
+
+    const expectedKey = konamiSequence[easterEggSequenceIndex];
+    easterEggSequenceIndex = event.code === expectedKey ? easterEggSequenceIndex + 1 : (event.code === konamiSequence[0] ? 1 : 0);
+
+    if (easterEggSequenceIndex === konamiSequence.length) {
+      easterEggSequenceIndex = 0;
+      showEasterEgg("konami");
+    }
+  }
+
   if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
     event.preventDefault();
     searchInput.focus();
@@ -760,55 +1524,126 @@ document.addEventListener("keydown", event => {
   if (event.key === "Escape" && document.activeElement === searchInput) {
     searchInput.value = "";
     state.query = "";
-    render();
     searchInput.blur();
   }
 });
 
-render();
+let easterEggToastTimer = 0;
+let easterEggHideTimer = 0;
+let archiveModeTimer = 0;
+let easterEggReturnFocus = null;
 
-const maintenanceScreen = document.getElementById("maintenanceScreen");
-const siteContent = document.getElementById("siteContent");
-const pageDescription = document.getElementById("pageDescription");
-const loadingScreen = document.getElementById("loadingScreen");
-const agreementScreen = document.getElementById("agreementScreen");
-const agreementCheckbox = document.getElementById("agreementCheckbox");
-const agreementAccept = document.getElementById("agreementAccept");
-const openingDate = new Date(2026, 11, 1);
-const SITE_LOADING_DURATION = 2000;
-
-agreementCheckbox.addEventListener("change", () => {
-  agreementAccept.disabled = !agreementCheckbox.checked;
-});
-
-agreementAccept.addEventListener("click", () => {
-  if (!agreementCheckbox.checked) return;
-  agreementScreen.hidden = true;
-  siteContent.inert = false;
-  siteContent.removeAttribute("aria-hidden");
-  document.body.classList.remove("site-closed");
-});
-
-function updateSiteAvailability() {
-  const remaining = openingDate.getTime() - Date.now();
-  if (remaining > 0) {
-    window.setTimeout(updateSiteAvailability, Math.min(remaining, 2147483647));
-    return;
-  }
-
-  maintenanceScreen.hidden = true;
-  siteContent.hidden = false;
-  siteContent.inert = true;
-  siteContent.setAttribute("aria-hidden", "true");
-  document.title = "Osint-Tools";
-  pageDescription.content = "Osint-Tools — каталог инструментов сквада.";
-
-  window.setTimeout(() => {
-    agreementScreen.hidden = false;
-    agreementCheckbox.focus();
-    loadingScreen.classList.add("is-hidden");
-    loadingScreen.setAttribute("aria-hidden", "true");
-  }, SITE_LOADING_DURATION);
+function closeEasterEggWarning() {
+  easterEggToast.classList.remove("is-warning", "is-visible");
+  document.body.classList.remove("easter-egg-warning-open");
+  easterEggToast.removeAttribute("aria-modal");
+  easterEggToast.setAttribute("role", "status");
+  easterEggToast.setAttribute("aria-live", "polite");
+  easterEggHideTimer = window.setTimeout(() => {
+    easterEggToast.hidden = true;
+    if (easterEggReturnFocus instanceof HTMLElement) easterEggReturnFocus.focus();
+    easterEggReturnFocus = null;
+  }, 220);
 }
 
-updateSiteAvailability();
+easterEggClose.addEventListener("click", closeEasterEggWarning);
+easterEggToast.addEventListener("click", event => {
+  if (event.target === easterEggToast && easterEggToast.classList.contains("is-warning")) {
+    closeEasterEggWarning();
+  }
+});
+
+function showEasterEgg(type) {
+  const lang = getCurrentLanguage();
+  const messages = {
+    konami: {
+      title: { ru: "Архивный режим включён", en: "Archive mode enabled" },
+      message: null
+    },
+    dox: {
+      title: { ru: "Вы нашли DOX", en: "You found DOX" },
+      message: {
+        ru: "Доксинг — публикация чужих личных данных без согласия. Это нарушает приватность и может повлечь гражданскую или уголовную ответственность в зависимости от страны и обстоятельств. Не используйте данные для травли или угроз.",
+        en: "Doxxing is publishing someone's private information without consent. It violates privacy and may lead to civil or criminal liability, depending on local law and circumstances. Never use personal data to harass or threaten someone."
+      }
+    },
+    swat: {
+      title: { ru: "Вы нашли SWAT", en: "You found SWAT" },
+      message: {
+        ru: "Сваттинг — заведомо ложное сообщение об опасности, чтобы вызвать экстренные службы к чужому адресу. Это может привести к травмам или гибели людей и повлечь уголовное наказание. Не делайте ложных вызовов.",
+        en: "Swatting is making a knowingly false emergency report to send responders to someone else's address. It can cause serious injury or death and may result in criminal penalties. Never make a false emergency call."
+      }
+    },
+    logo: {
+      title: { ru: "Досье №007 открыто", en: "Case file 007 opened" },
+      message: null
+    }
+  };
+  const content = messages[type] || messages.logo;
+  const fact = LOADING_FACTS[Math.floor(Math.random() * LOADING_FACTS.length)];
+  const isWarning = type === "dox" || type === "swat";
+
+  easterEggTitle.textContent = content.title[lang];
+  easterEggMessage.textContent = content.message
+    ? content.message[lang]
+    : fact[lang] || fact.ru;
+  window.clearTimeout(easterEggHideTimer);
+  easterEggToast.classList.toggle("is-warning", isWarning);
+  if (isWarning) {
+    easterEggReturnFocus = document.activeElement;
+    document.body.classList.add("easter-egg-warning-open");
+    easterEggToast.setAttribute("role", "alertdialog");
+    easterEggToast.setAttribute("aria-modal", "true");
+    easterEggToast.setAttribute("aria-labelledby", "easterEggTitle");
+    easterEggToast.setAttribute("aria-describedby", "easterEggMessage");
+    easterEggToast.removeAttribute("aria-live");
+    easterEggClose.textContent = lang === "en" ? "Close" : "Закрыть";
+  } else {
+    easterEggToast.setAttribute("role", "status");
+    easterEggToast.removeAttribute("aria-modal");
+    easterEggToast.removeAttribute("aria-labelledby");
+    easterEggToast.removeAttribute("aria-describedby");
+    easterEggToast.setAttribute("aria-live", "polite");
+  }
+  easterEggToast.hidden = false;
+  easterEggToast.classList.remove("is-visible");
+  requestAnimationFrame(() => easterEggToast.classList.add("is-visible"));
+
+  window.clearTimeout(easterEggToastTimer);
+  if (isWarning) {
+    easterEggClose.focus();
+  } else {
+    easterEggToastTimer = window.setTimeout(() => {
+      easterEggToast.classList.remove("is-visible");
+      easterEggHideTimer = window.setTimeout(() => {
+        easterEggToast.hidden = true;
+      }, 220);
+    }, 5200);
+  }
+
+  if (type === "konami") {
+    document.body.classList.add("easter-egg-mode");
+    window.clearTimeout(archiveModeTimer);
+    archiveModeTimer = window.setTimeout(() => {
+      document.body.classList.remove("easter-egg-mode");
+    }, 7500);
+  }
+}
+
+let brandClickCount = 0;
+let brandClickTimer = 0;
+
+document.querySelector(".brand").addEventListener("click", () => {
+  brandClickCount += 1;
+  window.clearTimeout(brandClickTimer);
+  brandClickTimer = window.setTimeout(() => {
+    brandClickCount = 0;
+  }, 1800);
+
+  if (brandClickCount >= 5) {
+    brandClickCount = 0;
+    showEasterEgg("logo");
+  }
+});
+
+render();

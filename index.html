@@ -1,35 +1,34 @@
 <!doctype html>
 <html lang="ru">
 <head>
+  <meta http-equiv="refresh" content="0; url=maintenance/index.html">
+  <script>window.location.replace("maintenance/index.html");</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta id="pageDescription" name="description" content="Сайт Osint-Tools временно закрыт и откроется 1 декабря 2026 года.">
-  <title>Osint-Tools — скоро открытие</title>
-  <link rel="icon" type="image/png" href="favicon.png?v=2">
-  <link rel="stylesheet" href="style.css?v=25">
+  <meta name="description" content="Каталог инструментов OSINT для поиска и анализа открытых источников: веб-поиск, соцсети, домены, карты, медиа и архивы. Поиск по категориям и краткие описания сервисов.">
+  <meta name="robots" content="index, follow">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="OSINT Tools">
+  <meta property="og:title" content="OSINT Tools — каталог инструментов OSINT">
+  <meta property="og:description" content="Каталог инструментов для поиска и анализа открытых источников: веб-поиск, соцсети, домены, карты, медиа и архивы.">
+  <meta property="og:locale" content="ru_RU">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="OSINT Tools — каталог инструментов OSINT">
+  <meta name="twitter:description" content="Каталог инструментов для поиска и анализа открытых источников: веб-поиск, соцсети, домены, карты, медиа и архивы.">
+  <title>OSINT Tools — каталог инструментов OSINT</title>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "OSINT Tools",
+      "description": "Каталог инструментов для поиска и анализа открытых источников.",
+      "inLanguage": "ru"
+    }
+  </script>
+  <link rel="icon" type="image/png" href="favicon.png?v=6">
+  <link rel="stylesheet" href="style.css?v=5">
 </head>
-<body class="site-closed">
-  <main class="maintenance-screen" id="maintenanceScreen" aria-labelledby="maintenanceTitle">
-    <section class="maintenance-card" role="status" aria-describedby="maintenanceMessage">
-      <div class="maintenance-brand">
-        <img src="logo.png" alt="">
-        <span>Osint-Tools</span>
-        <div class="maintenance-indicator" aria-hidden="true">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      </div>
-      <div class="maintenance-header">
-        <span class="maintenance-badge">SERVICE STATUS</span>
-      </div>
-      <h1 id="maintenanceTitle">Сайт временно закрыт</h1>
-      <p class="maintenance-kicker">Снова откроется</p>
-      <time class="maintenance-date" datetime="2026-12-01">1 декабря 2026 года</time>
-      <p id="maintenanceMessage">Работа сайта возобновится в указанную дату. Спасибо за ваше терпение!</p>
-      <div class="maintenance-status"><span></span> Платформа временно закрыта</div>
-    </section>
-  </main>
+<body class="agreement-required">
   <section class="agreement-screen" id="agreementScreen" aria-labelledby="agreementTitle" hidden>
     <div class="agreement-panel" role="dialog" aria-modal="true" aria-describedby="agreementHint">
       <h1 id="agreementTitle">Пользовательское соглашение</h1>
@@ -98,32 +97,32 @@
       <button class="agreement-accept" id="agreementAccept" type="button" disabled>Продолжить</button>
     </div>
   </section>
-  <div id="siteContent" class="site-content" hidden inert aria-hidden="true">
-    <div class="loading-screen" id="loadingScreen" role="status" aria-live="polite" aria-label="Loading site">
-      <div class="loading-panel">
-        <img class="loading-logo" src="logo.png" alt="">
-        <div class="loading-title">Osint-Tools</div>
-        <div class="loading-caption" data-i18n="loadingTools">Загружаем инструменты...</div>
-        <div class="loading-track" aria-hidden="true"><span></span></div>
-      </div>
+  <div id="siteShell" inert>
+  <div class="loading-screen" id="loadingScreen" role="status" aria-live="polite" aria-label="Загрузка сайта">
+    <div class="loading-panel">
+      <img class="loading-logo" src="logo.png" alt="">
+      <div class="loading-title">Osint-Tools</div>
+      <div class="loading-caption" id="loadingFact" aria-live="polite"></div>
+      <div class="loading-track" aria-hidden="true"><span></span></div>
     </div>
+  </div>
+
   <header class="topbar">
     <div class="brand-wrap">
       <a class="brand" href="#">
         <img class="brand-mark" src="logo.png" alt="">
         <span class="brand-title">Osint-Tools</span>
       </a>
-      <span class="brand-subtitle">by whiteopex</span>
     </div>
 
-    <a class="telegram-link" href="https://t.me/osintsiteopex" target="_blank" rel="noopener noreferrer" data-i18n="telegramLink">
-      Telegram-канал
-    </a>
-
     <div class="top-actions">
+      <button class="favorite-nav-btn" id="favoritesToggle" type="button" aria-pressed="false">
+        <span class="favorite-nav-icon" aria-hidden="true">☆</span>
+        <span data-i18n="favorites">Избранное</span>
+        <span class="count" id="favoritesCount">0</span>
+      </button>
       <button class="lang-btn" id="langToggle" type="button" aria-label="English interface">EN</button>
       <button class="icon-btn" id="themeBtn" type="button" title="Переключить тему" aria-label="Переключить тему" aria-pressed="false">☼</button>
-      <span class="admin-link" aria-label="Beta-test">Beta-test</span>
     </div>
   </header>
 
@@ -139,15 +138,25 @@
     <section class="content">
       <div class="hero">
         <div>
-          <div class="eyebrow">XZX SQUAD</div>
           <h1>Osint-Tools</h1>
-          <p data-i18n="heroText">Лёгкий каталог инструментов для команды.</p>
+          <p data-i18n="heroText">Каталог инструментов для OSINT</p>
         </div>
 
         <div class="stats">
           <div><strong id="toolCount">0</strong><span data-i18n="toolsText">инструментов</span></div>
           <div><strong id="categoryCount">0</strong><span data-i18n="categoriesText">категорий</span></div>
         </div>
+      </div>
+
+      <div class="view-switch" role="group" aria-label="Вид каталога">
+        <button class="view-switch-btn active" id="cardsViewBtn" type="button" aria-pressed="true">
+          <span class="view-mode-icon view-mode-cards" aria-hidden="true">▦</span>
+          <span data-i18n="viewCards">Карточки</span>
+        </button>
+        <button class="view-switch-btn" id="foldersViewBtn" type="button" aria-pressed="false">
+          <span class="view-mode-icon view-mode-folder" aria-hidden="true"></span>
+          <span data-i18n="viewFolders">Папки</span>
+        </button>
       </div>
 
       <div class="toolbar">
@@ -159,9 +168,18 @@
         <button class="sort-btn" id="sortBtn" type="button">A–Я</button>
       </div>
 
-      <div id="catalog"></div>
+      <section class="recent-tools" id="recentSection" aria-labelledby="recentHeading" hidden>
+        <div class="recent-heading">
+          <h2 id="recentHeading" data-i18n="recentlyOpened">Недавно открытые</h2>
+          <button class="recent-clear" id="clearRecent" type="button" data-i18n="clearRecent">Очистить</button>
+        </div>
+        <div class="tools" id="recentTools"></div>
+      </section>
 
-      <div class="empty hidden" id="empty">
+      <div id="catalog"></div>
+        <div class="catalog-loading hidden" id="catalogLoading" role="status" aria-live="polite"></div>
+
+        <div class="empty hidden" id="empty">
         <div class="empty-icon">⌕</div>
         <h3 data-i18n="emptyTitle">Ничего не найдено</h3>
         <p data-i18n="emptyText">Попробуй изменить запрос или выбрать другую категорию.</p>
@@ -172,10 +190,134 @@
 
   <footer>
     <span>Osint-Tools</span>
-    <span>XZX SQUAD 2026</span>
+    <a class="agreement-link" href="#agreement">Пользовательское соглашение</a>
+    <span>Beta-test</span>
   </footer>
+
+  <div class="easter-egg-toast" id="easterEggToast" role="status" aria-live="polite" hidden>
+    <span class="easter-egg-mark" aria-hidden="true">✦</span>
+    <div>
+      <strong id="easterEggTitle"></strong>
+      <p id="easterEggMessage"></p>
+      <button class="easter-egg-close" id="easterEggClose" type="button"></button>
+    </div>
+  </div>
   </div>
 
-  <script src="script.js?v=10"></script>
+  <section class="notice-screen" id="noticeScreen" aria-labelledby="noticeTitle" aria-describedby="noticeMessage" hidden>
+    <div class="notice-panel" role="dialog" aria-modal="true">
+      <h2 id="noticeTitle">Важно!</h2>
+      <p class="notice-message" id="noticeMessage">Временно разработка сайта прекращена, за этот год скорее всего это последнее обновление.
+        Возможно, что в будущем сайт будет закрыт или изменен. Пожалуйста, используйте его с осторожностью и на свой страх и риск. С уважением, команда Osint-Tools.
+      </p>
+      <button class="notice-close" id="noticeClose" type="button">Понятно</button>
+    </div>
+  </section>
+
+  <div class="osint-game-screen" id="osintGameScreen" hidden>
+    <section class="osint-game-panel" role="dialog" aria-modal="true" aria-labelledby="osintGameTitle">
+      <div class="game-topline">
+        <div>
+          <p class="game-eyebrow" id="osintGameEyebrow">OSINT / FIELD TEST</p>
+          <h2 id="osintGameTitle">Следы в открытых источниках</h2>
+        </div>
+        <button class="game-close" id="osintGameClose" type="button" aria-label="Закрыть игру">×</button>
+      </div>
+      <div class="game-meta">
+        <span id="osintGameRound">ДОСЬЕ 01 / 08</span>
+        <span id="osintGameScore">Очки 0</span>
+      </div>
+      <div class="game-progress" aria-hidden="true"><span id="osintGameProgress"></span></div>
+      <p class="game-question" id="osintGameQuestion"></p>
+      <div class="game-choices" id="osintGameChoices"></div>
+      <div class="game-feedback" id="osintGameFeedback" role="status" aria-live="polite" hidden></div>
+      <div class="game-footer">
+        <button class="game-next" id="osintGameNext" type="button" hidden>Дальше</button>
+      </div>
+    </section>
+  </div>
+
+  <script src="script.js?v=24"></script>
+  <script>
+    const agreementScreen = document.getElementById("agreementScreen");
+    const agreementCheckbox = document.getElementById("agreementCheckbox");
+    const agreementAccept = document.getElementById("agreementAccept");
+    const siteShell = document.getElementById("siteShell");
+    const noticeScreen = document.getElementById("noticeScreen");
+    const noticeClose = document.getElementById("noticeClose");
+    const agreementVersion = "2026-10-26";
+    const agreementStorageKey = "osint-agreement-version";
+
+    const hasAcceptedAgreement = () => {
+      try {
+        return localStorage.getItem(agreementStorageKey) === agreementVersion;
+      } catch {
+        return false;
+      }
+    };
+
+    const closeAgreementScreen = () => {
+      agreementScreen.hidden = true;
+      siteShell.inert = false;
+      siteShell.removeAttribute("aria-hidden");
+      document.body.classList.remove("agreement-required");
+      noticeScreen.hidden = false;
+      document.body.classList.add("notice-open");
+      noticeClose.focus();
+    };
+
+    const closeNoticeScreen = () => {
+      noticeScreen.hidden = true;
+      document.body.classList.remove("notice-open");
+    };
+
+    noticeClose.addEventListener("click", closeNoticeScreen);
+    noticeScreen.addEventListener("click", event => {
+      if (event.target === noticeScreen) closeNoticeScreen();
+    });
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape" && !noticeScreen.hidden) closeNoticeScreen();
+    });
+
+    const resetAgreementConfirmation = () => {
+      agreementCheckbox.checked = false;
+      agreementAccept.disabled = true;
+    };
+
+    window.showAgreementScreen = (force = false) => {
+      if (!force && hasAcceptedAgreement()) {
+        closeAgreementScreen();
+        return;
+      }
+
+      agreementCheckbox.checked = false;
+      agreementAccept.disabled = true;
+      siteShell.inert = true;
+      siteShell.setAttribute("aria-hidden", "true");
+      document.body.classList.add("agreement-required");
+      agreementScreen.hidden = false;
+      agreementCheckbox.focus();
+    };
+
+    resetAgreementConfirmation();
+    window.addEventListener("pageshow", resetAgreementConfirmation);
+
+    document.querySelector(".agreement-link").addEventListener("click", event => {
+      event.preventDefault();
+      window.showAgreementScreen(true);
+    });
+
+    agreementCheckbox.addEventListener("change", () => {
+      agreementAccept.disabled = !agreementCheckbox.checked;
+    });
+
+    agreementAccept.addEventListener("click", () => {
+      if (!agreementCheckbox.checked) return;
+      try {
+        localStorage.setItem(agreementStorageKey, agreementVersion);
+      } catch {}
+      closeAgreementScreen();
+    });
+  </script>
 </body>
 </html>
