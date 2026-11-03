@@ -91,7 +91,7 @@ const TOOLS = [
     name: "E-Caller",
     url: "https://www.e-caller.com/",
     icon: "P",
-    description: "Проверка номера телефона и его оператора"
+    description: "Проверка номера телефона и его оператора.",
   },
    {
     category: "Люди и контакты",
@@ -112,7 +112,7 @@ const TOOLS = [
     name: "OSINTKit",
     url: "https://osintkit.net/",
     icon: "P",
-    description: "Проверка утечек данных и поиск информации о русских жителях, совершивших преступления в Украине."
+    description: "Проверка утечек данных и поиск информации по открытым источникам."
   },
   
   // Соцсети и мессенджеры
@@ -204,12 +204,13 @@ const TOOLS = [
     icon: "2",
     description: "Карта покрытия 5G в разных странах."
   },
-    {
-    category: "Гео и объекты",
+  // Поиск и мониторинг
+  {
+    category: "Поиск и мониторинг",
     name: "Alerts.in.ua",
     url: "https://alerts.in.ua/",
     icon: "2",
-    description: "Карта боевых действий в Украине."
+    description: "Карта боевых действий и оперативные оповещения."
   },
 
   // Медиа и файлы
@@ -319,7 +320,7 @@ const TOOLS = [
   {
     category: "Код и репозитории",
     name: "ISC SANS",
-    url: "https://isc.sans.edu/rssfeed_full.xml",
+    url: "https://isc.sans.edu/",
     icon: "I",
     description: "Новости и анализ по кибербезопасности."
   },
@@ -363,28 +364,28 @@ const TOOLS = [
     description: "Поиск интернет-хостов и сертификатов."
   },
 
-  // Зеркала
+  // Поиск людей
   {
-    category: "Зеркала",
+    category: "Поиск людей",
     name: "FindHomo",
     url: "https://www.findhomo.com/",
     icon: "З",
     description: "Поиск людей и открытых данных по профильным записям."
   },
   {
-    category: "Зеркала",
+    category: "Поиск людей",
     name: "FunStat/Telelog",
     url: "https://funstat.info/",
     icon: "З",
     description: "Анализ Telegram-каналов, групп и статистики активности аудитории."
   },
   {
-    category: "Зеркала",
+    category: "Поиск людей",
     name: "Oko Search",
     url: "https://okosearch.com/",
     icon: "З",
     verified: true,
-    description: "Ищет данные по открытым источником по номеру телефона, ФИО, почта и т.д"
+    description: "Ищет данные по открытым источникам по номеру телефона, ФИО, почте и т.д."
   },
 
   // Веб-архивы
@@ -406,25 +407,51 @@ const TOOLS = [
 
 const FAVORITES_STORAGE_KEY = "osint-favorites";
 const RECENT_STORAGE_KEY = "osint-recent-tools";
+const THEME_STORAGE_KEY = "osint-theme";
+const LANG_STORAGE_KEY = "osint-lang";
+const AGREEMENT_STORAGE_KEY = "osint-agreement-version";
+const AGREEMENT_VERSION = "2026-10-26";
+const NOTICE_STORAGE_KEY = "osint-notice-seen";
 
-function loadFavorites() {
-  try {
-    const savedNames = JSON.parse(localStorage.getItem(FAVORITES_STORAGE_KEY) || "[]");
-    const knownNames = new Set(TOOLS.map(tool => tool.name));
-    return new Set(Array.isArray(savedNames) ? savedNames.filter(name => knownNames.has(name)) : []);
-  } catch {
-    return new Set();
+const storage = {
+  get(key) {
+    try {
+      return localStorage.getItem(key);
+    } catch {
+      return null;
+    }
+  },
+  set(key, value) {
+    try {
+      localStorage.setItem(key, value);
+    } catch {}
+  },
+  remove(key) {
+    try {
+      localStorage.removeItem(key);
+    } catch {}
   }
-}
+};
 
-function loadRecentTools() {
+function parseJsonArray(value) {
   try {
-    const savedNames = JSON.parse(localStorage.getItem(RECENT_STORAGE_KEY) || "[]");
-    const knownNames = new Set(TOOLS.map(tool => tool.name));
-    return Array.isArray(savedNames) ? savedNames.filter(name => knownNames.has(name)).slice(0, 5) : [];
+    const parsed = JSON.parse(value || "[]");
+    return Array.isArray(parsed) ? parsed : [];
   } catch {
     return [];
   }
+}
+
+function loadFavorites() {
+  const savedNames = parseJsonArray(storage.get(FAVORITES_STORAGE_KEY));
+  const knownNames = new Set(TOOLS.map(tool => tool.name));
+  return new Set(savedNames.filter(name => knownNames.has(name)));
+}
+
+function loadRecentTools() {
+  const savedNames = parseJsonArray(storage.get(RECENT_STORAGE_KEY));
+  const knownNames = new Set(TOOLS.map(tool => tool.name));
+  return savedNames.filter(name => knownNames.has(name)).slice(0, 5);
 }
 
 const state = {
@@ -452,7 +479,7 @@ const CATEGORY_TRANSLATIONS = {
     "Код и репозитории": "Код и репозитории",
     "Дорки": "Дорки",
     "Порты": "Порты",
-    "Зеркала": "Зеркала",
+    "Поиск людей": "Поиск людей",
     "Веб-архивы": "Веб-архивы"
   },
   en: {
@@ -470,7 +497,7 @@ const CATEGORY_TRANSLATIONS = {
     "Код и репозитории": "Code & Repositories",
     "Дорки": "Dorks",
     "Порты": "Ports",
-    "Зеркала": "Mirrors",
+    "Поиск людей": "People Search",
     "Веб-архивы": "Web Archives"
   }
 };
@@ -482,7 +509,6 @@ const UI_TEXT = {
     viewCards: "Карточки",
     viewFolders: "Папки",
     backToFolders: "Все папки",
-    folderToolCount: "инструментов",
     favorites: "Избранное",
     addFavorite: "Добавить в избранное",
     removeFavorite: "Убрать из избранного",
@@ -496,10 +522,69 @@ const UI_TEXT = {
     emptyText: "Попробуй изменить запрос или выбрать другую категорию.",
     emptyFavoritesTitle: "Избранное пока пусто",
     emptyFavoritesText: "Сохраняй полезные инструменты здесь, чтобы быстро находить их позже.",
-    telegramLink: "Telegram-канал",
     sortAlphabetical: "А–Я",
     sortOriginal: "По добавлению",
-    loadingTools: "Загружаем инструменты..."
+    loadingTools: "Загружаем инструменты...",
+    verifiedLegend: "Проверено: источник и описание инструмента проверены командой каталога.",
+    agreementText: `ПОЛЬЗОВАТЕЛЬСКОЕ СОГЛАШЕНИЕ (TERMS OF USE)
+Дата последнего обновления: 26 октября 2026 года
+
+Настоящее Пользовательское соглашение регулирует порядок использования веб-сайта OSINT Tools, представляющего собой информационный каталог и набор инструментов для исследования по открытым источникам (OSINT).
+
+Заходя на Сайт или используя представленные на нем инструменты, Пользователь подтверждает свое полное и безоговорочное согласие с условиями настоящего Соглашения.
+
+1. НАЗНАЧЕНИЕ САЙТА И ХАРАКТЕР ИНСТРУМЕНТОВ
+1.1. Сайт является исключительно информационно-справочным ресурсом. Мы предоставляем Пользователям список ссылок, описаний, скриптов, поисковых шаблонов (dorks) и сторонних сервисов для проведения анализа публичной информации (OSINT).
+
+1.2. Сайт НЕ собирает, НЕ хранит и НЕ обрабатывает персональные данные третьих лиц. Все результаты поисков или обработки данных происходят либо на стороне сторонних сервисов, либо локально в браузере Пользователя.
+
+1.3. Весь контент и инструменты предоставляются на условиях «КАК ЕСТЬ» («AS IS») для образовательных целей, исследований в области cybersecurity, журналистских расследований и легального поиска информации.
+
+2. СТРАНИЦЫ И СЕРВИСЫ ТРЕТЬИХ ЛИЦ
+2.1. Сайт содержит ссылки на сторонние веб-ресурсы, сервисы и программное обеспечение, не принадлежащие и не контролируемые Администрацией.
+
+2.2. Администрация не несет ответственности за:
+
+Доступность, содержание и безопасность сторонних сайтов;
+
+Изменение функционала или условий использования сторонних OSINT-инструментов;
+
+Точность или достоверность информации, получаемой Пользователем с помощью этих внешних ресурсов.
+
+2.3. Переход по любым внешним ссылкам осуществляется Пользователем на свой страх и риск.
+
+3. ПРАВИЛА И ЭТИКА ИСПОЛЬЗОВАНИЯ
+3.1. Пользователь обязуется применять представленные на Сайте инструменты строго в рамках действующего законодательства.
+
+3.2. Категорически запрещено использовать инструменты Сайта для:
+
+Незаконной слежки (сталкинга), вымогательства, шантажа или доксинга;
+
+Получения несанкционированного доступа к компьютерной информации и защищенным системам;
+
+Нарушения прав граждан на неприкосновенность частной жизни и личную тайну;
+
+Любой иной противоправной деятельности.
+
+4. ОГРАНИЧЕНИЕ ОТВЕТСТВЕННОСТИ (DISCLAIMER)
+4.1. Администрация не несет ответственности за то, как именно Пользователь распорядится полученными инструментами, ссылками или результатами поисков.
+
+4.2. Администрация не гарантирует, что инструменты будут работать без ошибок, сбоев или что они соответствуют ожиданиям Пользователя.
+
+4.3. Администрация не отвечает за прямой или косвенный ущерб, включая упущенную выгоду или потерю данных, возникший из-за использования или невозможности использования материалов Сайта.
+
+5. ИНТЕЛЛЕКТУАЛЬНАЯ СОБСТВЕННОСТЬ
+5.1. Дизайн Сайта, подборка материалов, оригинальные описания и интерфейс принадлежат Администрации Проекта.
+
+5.2. Логотипы, названия, торговые марки и скрипты сторонних OSINT-инструментов принадлежат их законным правообладателям.
+
+6. ИЗМЕНЕНИЕ УСЛОВИЙ
+6.1. Администрация оставляет за собой право вносить изменения в настоящее Соглашение в любое время без предварительного уведомления.
+
+6.2. Актуальная версия Соглашения всегда доступна на этой странице.`,
+    footerBrand: "OSINT Tools",
+    agreementLink: "Пользовательское соглашение",
+    footerMeta: "Версия 1.0 · Обновлено 3 ноября 2026"
   },
   en: {
     categories: "Categories",
@@ -507,13 +592,12 @@ const UI_TEXT = {
     viewCards: "Cards",
     viewFolders: "Folders",
     backToFolders: "All folders",
-    folderToolCount: "tools",
     favorites: "Favorites",
     addFavorite: "Add to favorites",
     removeFavorite: "Remove from favorites",
     recentlyOpened: "Recently opened",
     clearRecent: "Clear",
-    heroText: "A lightweight OSINT tool catalog for the team.",
+    heroText: "A lightweight OSINT tool catalog.",
     toolsText: "tools",
     categoriesText: "categories",
     searchPlaceholder: "Search tool...",
@@ -521,10 +605,51 @@ const UI_TEXT = {
     emptyText: "Try a different query or choose another category.",
     emptyFavoritesTitle: "No favorites yet",
     emptyFavoritesText: "Save useful tools here to find them quickly later.",
-    telegramLink: "Telegram channel",
     sortAlphabetical: "A–Z",
     sortOriginal: "As added",
-    loadingTools: "Loading tools..."
+    loadingTools: "Loading tools...",
+    verifiedLegend: "Verified: the source and the tool description have been checked by the catalog team.",
+    agreementText: `USER AGREEMENT (TERMS OF USE)
+      Last updated: October 26, 2026
+
+      This User Agreement governs the use of the OSINT Tools website, which is an informational catalog and set of tools for research into open sources (OSINT).
+
+      By accessing or using the Site and the tools it provides, the User confirms full and unconditional acceptance of these terms.
+
+      1. SITE AND TOOL PURPOSE
+      1.1. The Site is an informational reference resource. It provides links, descriptions, scripts, search dorks, and third-party services for open-source research.
+
+      1.2. The Site does not collect, store, or process third-party personal data. Search results are processed either by third-party services or locally in the User's browser.
+
+      1.3. All content and tools are provided "AS IS" for educational, cybersecurity research, journalism, and lawful investigations.
+
+      2. THIRD-PARTY SERVICES
+      2.1. The Site contains links to third-party resources, services, and software not owned or controlled by the administration.
+
+      2.2. The administration is not responsible for the availability, content, or security of third-party sites, or for changes to their functionality or terms.
+
+      2.3. Any third-party link is used at the User's own risk.
+
+      3. RULES AND ETHICS
+      3.1. The User agrees to use the provided tools only within the law.
+
+      3.2. The following uses are prohibited: stalking, blackmail, doxxing, unauthorized access, or any unlawful activity.
+
+      4. LIABILITY (DISCLAIMER)
+      4.1. The administration is not liable for how the User uses tools, links, or results.
+
+      4.2. The administration does not guarantee that tools will work without errors or that they meet user expectations.
+
+      5. INTELLECTUAL PROPERTY
+      5.1. Site design, materials, original descriptions, and interface belong to the administration.
+
+      6. CHANGES
+      6.1. The administration may change this agreement at any time without notice.
+
+      6.2. The current version is always available on this page.`,
+    footerBrand: "OSINT Tools",
+    agreementLink: "User Agreement",
+    footerMeta: "Version 1.0 · Updated November 3, 2026"
   }
 };
 
@@ -596,7 +721,6 @@ const TOOL_NAMES_EN = {
   "Telescan": "Telescan",
   "FindHomo": "FindHomo",
   "FunStat/Telelog": "FunStat/Telelog",
-  "Зеркало": "Mirror"
 };
 
 const TOOL_DESCRIPTIONS_EN = {
@@ -615,7 +739,7 @@ const TOOL_DESCRIPTIONS_EN = {
   "E-Caller": "Check a phone number and its operator.",
   "HackCheck": "Check data leaks and user information.",
   "Dehashed": "Search data leaks and user records.",
-  "OSINTKit": "Search breach data and information about Russian citizens involved in crimes in Ukraine.",
+  "OSINTKit": "Search breach data and look up public information about involved individuals.",
   "TGCollector": "Collect data from Telegram.",
   "TgramSearch": "Search Telegram channels and groups.",
   "Telescan": "Analyze Telegram channels and groups.",
@@ -651,7 +775,6 @@ const TOOL_DESCRIPTIONS_EN = {
   "FindHomo": "People search and profile data discovery service.",
   "FunStat/Telelog": "Telegram channel and group analytics with audience and activity statistics.",
   "Oko Search": "Search open-source information using a phone number, full name, email address, and more.",
-  "Зеркало": "Mirror view for reading and analyzing web pages.",
   "Archive.today": "Web page archive.",
   "Wayback Machine": "Web archive."
 };
@@ -696,10 +819,12 @@ function applyLanguage(lang) {
 
   document.body.dataset.lang = lang;
   document.documentElement.lang = lang === "en" ? "en" : "ru";
+  storage.set(LANG_STORAGE_KEY, lang);
 
   const langToggle = document.getElementById("langToggle");
   if (langToggle) {
     langToggle.textContent = lang === "en" ? "RU" : "EN";
+    langToggle.setAttribute("aria-label", lang === "en" ? "Russian interface" : "English interface");
   }
 
   document.querySelectorAll("[data-i18n]").forEach(node => {
@@ -760,13 +885,20 @@ const categoryCounts = TOOLS.reduce((counts, tool) => {
 }, {});
 
 function renderCategoryNav() {
+  const previouslyFocused = document.activeElement;
+  const previousCategory = previouslyFocused && previouslyFocused.dataset
+    ? previouslyFocused.dataset.category
+    : null;
+
   document.querySelector('.sidebar > .category[data-category="all"]')
     .classList.toggle("active", state.category === "all");
   favoritesToggle.setAttribute("aria-pressed", String(state.category === "favorites"));
 
   categoryNav.innerHTML = categories.map(category => `
     <button class="category ${state.category === category ? "active" : ""}"
-            data-category="${escapeHtml(category)}">
+            data-category="${escapeAttribute(category)}"${
+      state.category === category ? ' aria-current="true"' : ""
+    }>
       <span>${escapeHtml(translateCategory(category))}</span>
       <span class="count">${categoryCounts[category]}</span>
     </button>
@@ -774,6 +906,32 @@ function renderCategoryNav() {
 
   allCount.textContent = TOOLS.length;
   favoritesCount.textContent = state.favorites.size;
+
+  if (previousCategory) {
+    const button = Array.from(categoryNav.querySelectorAll("button")).find(
+      element => element.dataset.category === previousCategory
+    );
+    if (button) button.focus();
+  }
+}
+
+function getToolSearchText(tool) {
+  const lang = getCurrentLanguage();
+  const name = getToolName(tool);
+  const description = getToolDescription(tool);
+  const category = translateCategory(tool.category);
+  const parts = lang === "en"
+    ? [name, description, category]
+    : [tool.name, tool.description || "", tool.category];
+
+  const searchableText = parts.join(" ").toLowerCase();
+  let hostname = "";
+  try {
+    hostname = tool.url ? new URL(tool.url).hostname.toLowerCase() : "";
+  } catch {
+    hostname = "";
+  }
+  return `${searchableText} ${hostname}`;
 }
 
 function filteredTools() {
@@ -785,12 +943,7 @@ function filteredTools() {
         ? state.favorites.has(tool.name)
         : tool.category === state.category);
 
-    const searchMatch =
-      !query ||
-      getToolName(tool).toLowerCase().includes(query) ||
-      (tool.description || "").toLowerCase().includes(query) ||
-      getToolDescription(tool).toLowerCase().includes(query) ||
-      tool.category.toLowerCase().includes(query);
+    const searchMatch = !query || getToolSearchText(tool).includes(query);
 
     return categoryMatch && searchMatch;
   });
@@ -809,11 +962,16 @@ let renderFrame = 0;
 const RENDER_BATCH_SIZE = 12;
 
 function finishLoadingScreen() {
-  if (!loadingScreen || loadingScreen.classList.contains("is-hidden")) return;
+  if (!loadingScreen) return;
 
-  window.showAgreementScreen();
-  loadingScreen.classList.add("is-hidden");
-  loadingScreen.setAttribute("aria-hidden", "true");
+  if (!loadingScreen.classList.contains("is-hidden")) {
+    loadingScreen.classList.add("is-hidden");
+    loadingScreen.setAttribute("aria-hidden", "true");
+  }
+
+  if (typeof window.showAgreementScreen === "function") {
+    window.showAgreementScreen();
+  }
 }
 
 function renderToolCard(tool) {
@@ -827,13 +985,13 @@ function renderToolCard(tool) {
         data-tool-name="${escapeAttribute(tool.name)}"
          target="_blank"
          rel="noopener noreferrer">
-        <div class="tool-icon">${escapeHtml(tool.icon || "⌁")}</div>
+        <div class="tool-icon" aria-hidden="true">${escapeHtml(tool.icon || "⌁")}</div>
         <div class="tool-body">
           <div class="tool-name">
-            <span class="tool-name-text">${escapeHtml(getToolName(tool))}</span>
-            ${tool.verified ? '<img class="verified-icon" src="verifed.png" alt="Verified" title="Verified">' : ""}
+            <span class="tool-name-text">${highlightToolText(getToolName(tool), state.query)}</span>
+            ${tool.verified ? `<img class="verified-icon" src="verified.png" alt="Verified" title="Verified" width="28" height="28" loading="lazy" decoding="async">` : ""}
           </div>
-          <div class="tool-desc">${escapeHtml(getToolDescription(tool))}</div>
+          <div class="tool-desc">${highlightToolText(getToolDescription(tool), state.query)}</div>
           <div class="tool-url">${escapeHtml(new URL(tool.url).hostname)}</div>
         </div>
       </a>
@@ -857,8 +1015,35 @@ function renderRecentTools() {
   recentToolsContainer.innerHTML = shouldShow ? recentItems.map(renderToolCard).join("") : "";
 }
 
+function syncToolUrl() {
+  const params = new URLSearchParams();
+  if (state.category && state.category !== "all") params.set("cat", state.category);
+  if (state.query) params.set("q", state.query);
+  if (state.view && state.view !== "cards") params.set("view", state.view);
+
+  const queryString = params.toString();
+  const newUrl = `${window.location.pathname}${queryString ? `?${queryString}` : ""}${window.location.hash || ""}`;
+  try {
+    window.history.replaceState(null, "", newUrl);
+  } catch {}
+}
+
+function readToolUrl() {
+  const params = new URLSearchParams(window.location.search);
+  const category = params.get("cat");
+  const query = params.get("q");
+  const view = params.get("view");
+
+  state.category = category && category !== "all" ? category : "all";
+  state.query = query || "";
+  state.view = view === "folders" ? "folders" : "cards";
+
+  if (searchInput) searchInput.value = state.query;
+}
+
 function render() {
   const version = ++renderVersion;
+  syncToolUrl();
 
   if (renderFrame) {
     cancelAnimationFrame(renderFrame);
@@ -926,6 +1111,11 @@ function render() {
   toolCount.nextElementSibling.textContent = toolCountWord(tools.length);
   categoryCount.textContent = new Set(tools.map(tool => tool.category)).size;
 
+  const searchStatus = document.getElementById("searchStatus");
+  if (searchStatus) {
+    searchStatus.textContent = `${tools.length} ${toolCountWord(tools.length)}`;
+  }
+
   if (tools.length === 0) {
     finishLoadingScreen();
     return;
@@ -983,6 +1173,27 @@ function escapeAttribute(value) {
   return escapeHtml(value);
 }
 
+function highlightToolText(value, query) {
+  const text = String(value === undefined || value === null ? "" : value);
+  const normalizedQuery = String(query || "").trim().toLowerCase();
+  if (!normalizedQuery) return escapeHtml(text);
+
+  const lowerText = text.toLowerCase();
+  const parts = [];
+  let lastIndex = 0;
+  let index = lowerText.indexOf(normalizedQuery);
+
+  while (index !== -1) {
+    parts.push(escapeHtml(text.slice(lastIndex, index)));
+    parts.push(`<mark>${escapeHtml(text.slice(index, index + normalizedQuery.length))}</mark>`);
+    lastIndex = index + normalizedQuery.length;
+    index = lowerText.indexOf(normalizedQuery, lastIndex);
+  }
+
+  parts.push(escapeHtml(text.slice(lastIndex)));
+  return parts.join("");
+}
+
 function updateSortButton() {
   const sortBtn = document.getElementById("sortBtn");
   if (!sortBtn) return;
@@ -1003,17 +1214,10 @@ function updateFavoriteButton(button, isFavorite) {
 
 function recordRecentTool(toolName) {
   state.recent = [toolName, ...state.recent.filter(name => name !== toolName)].slice(0, 5);
-  try {
-    localStorage.setItem(RECENT_STORAGE_KEY, JSON.stringify(state.recent));
-  } catch {}
+  storage.set(RECENT_STORAGE_KEY, JSON.stringify(state.recent));
 
   requestAnimationFrame(renderRecentTools);
 }
-
-searchInput.addEventListener("input", () => {
-  state.query = searchInput.value;
-  render();
-});
 
 document.querySelector(".sidebar").addEventListener("click", event => {
   const button = event.target.closest(".category");
@@ -1046,9 +1250,7 @@ function handleToolCardClick(event) {
     state.favorites.delete(toolName);
   }
 
-  try {
-    localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify([...state.favorites]));
-  } catch {}
+  storage.set(FAVORITES_STORAGE_KEY, JSON.stringify([...state.favorites]));
 
   favoritesCount.textContent = state.favorites.size;
   updateFavoriteButton(button, isFavorite);
@@ -1075,9 +1277,7 @@ recentToolsContainer.addEventListener("click", handleToolCardClick);
 
 document.getElementById("clearRecent").addEventListener("click", () => {
   state.recent = [];
-  try {
-    localStorage.removeItem(RECENT_STORAGE_KEY);
-  } catch {}
+  storage.remove(RECENT_STORAGE_KEY);
   renderRecentTools();
 });
 
@@ -1107,17 +1307,24 @@ if (langToggle) {
   });
 }
 
-applyLanguage("ru");
+const handlePopState = () => {
+  readToolUrl();
+  render();
+};
+window.addEventListener("popstate", handlePopState);
+
+readToolUrl();
+applyLanguage(storage.get(LANG_STORAGE_KEY) === "en" ? "en" : "ru");
 
 const themeBtn = document.getElementById("themeBtn");
 
 themeBtn.addEventListener("click", () => {
   const isLight = document.body.classList.toggle("light");
   themeBtn.setAttribute("aria-pressed", String(isLight));
-  localStorage.setItem("osint-theme", isLight ? "light" : "dark");
+  storage.set(THEME_STORAGE_KEY, isLight ? "light" : "dark");
 });
 
-if (localStorage.getItem("osint-theme") === "light") {
+if (storage.get(THEME_STORAGE_KEY) === "light") {
   document.body.classList.add("light");
   themeBtn.setAttribute("aria-pressed", "true");
 }
@@ -1525,7 +1732,33 @@ document.addEventListener("keydown", event => {
     searchInput.value = "";
     state.query = "";
     searchInput.blur();
+    render();
   }
+});
+
+let searchRenderTimer = null;
+
+const scheduleSearchRender = () => {
+  window.clearTimeout(searchRenderTimer);
+  searchRenderTimer = window.setTimeout(() => {
+    searchRenderTimer = null;
+    document.getElementById("searchClear").classList.toggle("hidden", !state.query);
+    render();
+  }, 130);
+};
+
+searchInput.addEventListener("input", () => {
+  state.query = searchInput.value;
+  scheduleSearchRender();
+});
+
+document.getElementById("searchClear").addEventListener("click", () => {
+  window.clearTimeout(searchRenderTimer);
+  searchRenderTimer = null;
+  searchInput.value = "";
+  state.query = "";
+  document.getElementById("searchClear").classList.add("hidden");
+  render();
 });
 
 let easterEggToastTimer = 0;
@@ -1536,6 +1769,8 @@ let easterEggReturnFocus = null;
 function closeEasterEggWarning() {
   easterEggToast.classList.remove("is-warning", "is-visible");
   document.body.classList.remove("easter-egg-warning-open");
+  const shell = document.getElementById("siteShell");
+  if (shell) shell.inert = false;
   easterEggToast.removeAttribute("aria-modal");
   easterEggToast.setAttribute("role", "status");
   easterEggToast.setAttribute("aria-live", "polite");
@@ -1592,6 +1827,8 @@ function showEasterEgg(type) {
   if (isWarning) {
     easterEggReturnFocus = document.activeElement;
     document.body.classList.add("easter-egg-warning-open");
+    const shell = document.getElementById("siteShell");
+    if (shell) shell.inert = true;
     easterEggToast.setAttribute("role", "alertdialog");
     easterEggToast.setAttribute("aria-modal", "true");
     easterEggToast.setAttribute("aria-labelledby", "easterEggTitle");
@@ -1645,5 +1882,3 @@ document.querySelector(".brand").addEventListener("click", () => {
     showEasterEgg("logo");
   }
 });
-
-render();

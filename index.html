@@ -3,39 +3,389 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OSINT Tools — каталог инструментов OSINT</title>
   <meta name="description" content="Каталог инструментов OSINT для поиска и анализа открытых источников: веб-поиск, соцсети, домены, карты, медиа и архивы. Поиск по категориям и краткие описания сервисов.">
   <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://osint-tools.org/">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="OSINT Tools">
   <meta property="og:title" content="OSINT Tools — каталог инструментов OSINT">
   <meta property="og:description" content="Каталог инструментов для поиска и анализа открытых источников: веб-поиск, соцсети, домены, карты, медиа и архивы.">
+  <meta property="og:url" content="https://osint-tools.org/">
+  <meta property="og:image" content="https://osint-tools.org/og-image.jpg">
+  <meta property="og:image:alt" content="OSINT Tools — карта каталога инструментов OSINT">
   <meta property="og:locale" content="ru_RU">
-  <meta name="twitter:card" content="summary">
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="OSINT Tools — каталог инструментов OSINT">
   <meta name="twitter:description" content="Каталог инструментов для поиска и анализа открытых источников: веб-поиск, соцсети, домены, карты, медиа и архивы.">
-  <title>OSINT Tools — каталог инструментов OSINT</title>
+  <meta name="twitter:image" content="https://osint-tools.org/og-image.jpg">
+  <meta name="theme-color" content="#171716">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="OSINT Tools">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" type="image/png" href="favicon.png?v=7">
+  <link rel="icon" type="image/x-icon" href="favicon.ico?v=7">
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
       "name": "OSINT Tools",
+      "url": "https://osint-tools.org/",
       "description": "Каталог инструментов для поиска и анализа открытых источников.",
-      "inLanguage": "ru"
+      "inLanguage": "ru",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Google",
+          "item": "https://www.google.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Yandex",
+          "item": "https://yandex.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "DuckDuckGo",
+          "item": "https://duckduckgo.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Brave Search",
+          "item": "https://search.brave.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 5,
+          "name": "SearXNG",
+          "item": "https://searx.space/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 6,
+          "name": "Startpage",
+          "item": "https://www.startpage.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 7,
+          "name": "Google Scholar",
+          "item": "https://scholar.google.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 8,
+          "name": "arXiv",
+          "item": "https://arxiv.org/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 9,
+          "name": "Hunter",
+          "item": "https://hunter.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 10,
+          "name": "Have I Been Pwned",
+          "item": "https://haveibeenpwned.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 11,
+          "name": "Truecaller",
+          "item": "https://www.truecaller.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 12,
+          "name": "SMSC HLR Lookup",
+          "item": "https://smsc.ru/testhlr/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 13,
+          "name": "E-Caller",
+          "item": "https://www.e-caller.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 14,
+          "name": "HackCheck",
+          "item": "https://hackcheck.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 15,
+          "name": "Dehashed",
+          "item": "https://www.dehashed.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 16,
+          "name": "OSINTKit",
+          "item": "https://osintkit.net/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 17,
+          "name": "TGCollector",
+          "item": "https://www.tgcollector.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 18,
+          "name": "TgramSearch",
+          "item": "https://tgramsearch.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 19,
+          "name": "Telescan",
+          "item": "https://github.com/pielco11/telescan"
+        },
+        {
+          "@type": "ListItem",
+          "position": 20,
+          "name": "Signal",
+          "item": "https://signal.org/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 21,
+          "name": "who.is",
+          "item": "https://who.is/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 22,
+          "name": "onion lookup",
+          "item": "https://onion.ail-project.org/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 23,
+          "name": "VirusTotal",
+          "item": "https://www.virustotal.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 24,
+          "name": "OpenStreetMap",
+          "item": "https://www.openstreetmap.org/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 25,
+          "name": "Google Maps",
+          "item": "https://maps.google.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 26,
+          "name": "2GIS",
+          "item": "https://2gis.ru/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 27,
+          "name": "Автокод",
+          "item": "https://avtocod.ru/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 28,
+          "name": "Nperf 5G Coverage Map",
+          "item": "https://www.nperf.com/en/map/5g"
+        },
+        {
+          "@type": "ListItem",
+          "position": 29,
+          "name": "Alerts.in.ua",
+          "item": "https://alerts.in.ua/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 30,
+          "name": "ExifTool",
+          "item": "https://exiftool.org/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 31,
+          "name": "InVID",
+          "item": "https://www.invid-project.eu/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 32,
+          "name": "OpenCorporates",
+          "item": "https://opencorporates.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 33,
+          "name": "Etherscan",
+          "item": "https://etherscan.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 34,
+          "name": "Blockchain.com Explorer",
+          "item": "https://www.blockchain.com/explorer"
+        },
+        {
+          "@type": "ListItem",
+          "position": 35,
+          "name": "ZodiacGraph",
+          "item": "https://zodiacgraph.netlify.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 36,
+          "name": "Obsidian",
+          "item": "https://obsidian.md/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 37,
+          "name": "Miro",
+          "item": "https://miro.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 38,
+          "name": "OSINT Framework",
+          "item": "https://osintframework.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 39,
+          "name": "Hugging Face",
+          "item": "https://huggingface.co/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 40,
+          "name": "OWASP",
+          "item": "https://owasp.org/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 41,
+          "name": "Tor",
+          "item": "https://torproject.org/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 42,
+          "name": "Nmap",
+          "item": "https://nmap.org/book/man.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 43,
+          "name": "ISC SANS",
+          "item": "https://isc.sans.edu/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 44,
+          "name": "GitHub",
+          "item": "https://github.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 45,
+          "name": "GitLab",
+          "item": "https://gitlab.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 46,
+          "name": "Google Advanced Search",
+          "item": "https://www.google.com/advanced_search"
+        },
+        {
+          "@type": "ListItem",
+          "position": 47,
+          "name": "Shodan",
+          "item": "https://www.shodan.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 48,
+          "name": "Censys",
+          "item": "https://search.censys.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 49,
+          "name": "FindHomo",
+          "item": "https://www.findhomo.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 50,
+          "name": "FunStat/Telelog",
+          "item": "https://funstat.info/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 51,
+          "name": "Oko Search",
+          "item": "https://okosearch.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 52,
+          "name": "Archive.today",
+          "item": "https://archive.today/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 53,
+          "name": "Wayback Machine",
+          "item": "https://web.archive.org/"
+        }
+      ]
     }
   </script>
-  <link rel="icon" type="image/png" href="favicon.png?v=6">
-  <link rel="stylesheet" href="style.css?v=5">
+  <link rel="stylesheet" href="style.css?v=6">
 </head>
-<body class="agreement-required">
-  <section class="agreement-screen" id="agreementScreen" aria-labelledby="agreementTitle" hidden>
+<body>
+  <a class="skip-link" href="#catalog">Перейти к каталогу</a>
+  <script>
+    (function () {
+      var themeKey = "osint-theme";
+      var langKey = "osint-lang";
+      var theme = "dark";
+      var lang = "ru";
+      try {
+        var storedTheme = localStorage.getItem(themeKey);
+        var storedLang = localStorage.getItem(langKey);
+        if (storedTheme === "light" || storedTheme === "dark") theme = storedTheme;
+        if (storedLang === "en" || storedLang === "ru") lang = storedLang;
+      } catch (error) {}
+      if (lang === "en") document.body.dataset.lang = "en";
+      if (theme === "light") document.body.classList.add("light");
+    })();
+  </script>
+  <section class="agreement-screen" id="agreement" aria-labelledby="agreementTitle" hidden>
     <div class="agreement-panel" role="dialog" aria-modal="true" aria-describedby="agreementHint">
-      <h1 id="agreementTitle">Пользовательское соглашение</h1>
+      <h2 id="agreementTitle">Пользовательское соглашение</h2>
       <p class="agreement-hint" id="agreementHint">Прочитайте соглашение и подтвердите ознакомление, чтобы продолжить.</p>
-      <!-- Вставьте текст соглашения вместо текста внутри блока agreement-copy. -->
-      <div class="agreement-copy" tabindex="0" aria-label="Текст пользовательского соглашения">ПОЛЬЗОВАТЕЛЬСКОЕ СОГЛАШЕНИЕ (TERMS OF USE)
+      <!-- Текст пользовательского соглашения подставляется из i18n-ключей (UI_TEXT.agreementText). -->
+      <div class="agreement-copy" tabindex="0" data-i18n="agreementText" aria-label="Текст пользовательского соглашения">ПОЛЬЗОВАТЕЛЬСКОЕ СОГЛАШЕНИЕ (TERMS OF USE)
 Дата последнего обновления: 26 октября 2026 года
 
-Настоящее Пользовательское соглашение регулирует порядок использования веб-сайта OSINT-TOOLS, представляющего собой информационный каталог и набор инструментов для исследования по открытым источникам (OSINT).
+Настоящее Пользовательское соглашение регулирует порядок использования веб-сайта OSINT Tools, представляющего собой информационный каталог и набор инструментов для исследования по открытым источникам (OSINT).
 
 Заходя на Сайт или используя представленные на нем инструменты, Пользователь подтверждает свое полное и безоговорочное согласие с условиями настоящего Соглашения.
 
@@ -95,11 +445,11 @@
       <button class="agreement-accept" id="agreementAccept" type="button" disabled>Продолжить</button>
     </div>
   </section>
-  <div id="siteShell" inert>
+  <div id="siteShell">
   <div class="loading-screen" id="loadingScreen" role="status" aria-live="polite" aria-label="Загрузка сайта">
     <div class="loading-panel">
-      <img class="loading-logo" src="logo.png" alt="">
-      <div class="loading-title">Osint-Tools</div>
+      <img class="loading-logo" src="logo.png" alt="" width="108" height="89" decoding="async">
+      <div class="loading-title">OSINT Tools</div>
       <div class="loading-caption" id="loadingFact" aria-live="polite"></div>
       <div class="loading-track" aria-hidden="true"><span></span></div>
     </div>
@@ -108,8 +458,8 @@
   <header class="topbar">
     <div class="brand-wrap">
       <a class="brand" href="#">
-        <img class="brand-mark" src="logo.png" alt="">
-        <span class="brand-title">Osint-Tools</span>
+        <img class="brand-mark" src="logo.png" alt="" width="108" height="89" decoding="async">
+        <span class="brand-title">OSINT Tools</span>
       </a>
     </div>
 
@@ -127,7 +477,7 @@
   <main class="layout">
     <aside class="sidebar">
       <div class="sidebar-title" data-i18n="categories">Категории</div>
-      <button class="category active" data-category="all">
+      <button class="category active" data-category="all" aria-current="true">
         <span data-i18n="allTools">Все инструменты</span><span class="count" id="allCount">0</span>
       </button>
       <div id="categoryNav"></div>
@@ -136,8 +486,9 @@
     <section class="content">
       <div class="hero">
         <div>
-          <h1>Osint-Tools</h1>
+          <h1>OSINT Tools</h1>
           <p data-i18n="heroText">Каталог инструментов для OSINT</p>
+          <p class="verified-legend" data-i18n="verifiedLegend">Проверено: источник и описание инструмента проверены командой каталога.</p>
         </div>
 
         <div class="stats">
@@ -159,11 +510,12 @@
 
       <div class="toolbar">
         <label class="search">
-          <span>⌕</span>
-          <input id="searchInput" type="search" placeholder="Поиск инструмента..." autocomplete="off" data-i18n-placeholder="searchPlaceholder">
-          <kbd>Ctrl K</kbd>
+          <span aria-hidden="true">⌕</span>
+          <input id="searchInput" type="search" placeholder="Поиск инструмента..." autocomplete="off" data-i18n-placeholder="searchPlaceholder" aria-label="Поиск инструмента">
+          <kbd aria-hidden="true">Ctrl K</kbd>
         </label>
         <button class="sort-btn" id="sortBtn" type="button">A–Я</button>
+        <button class="search-clear" id="searchClear" type="button" aria-label="Очистить поиск">×</button>
       </div>
 
       <section class="recent-tools" id="recentSection" aria-labelledby="recentHeading" hidden>
@@ -173,6 +525,8 @@
         </div>
         <div class="tools" id="recentTools"></div>
       </section>
+
+      <div id="searchStatus" class="visually-hidden" aria-live="polite"></div>
 
       <div id="catalog"></div>
         <div class="catalog-loading hidden" id="catalogLoading" role="status" aria-live="polite"></div>
@@ -187,9 +541,9 @@
   </main>
 
   <footer>
-    <span>Osint-Tools</span>
-    <a class="agreement-link" href="#agreement">Пользовательское соглашение</a>
-    <span>Beta-test</span>
+    <span data-i18n="footerBrand">OSINT Tools</span>
+    <a class="agreement-link" href="#agreement" data-i18n="agreementLink">Пользовательское соглашение</a>
+    <span data-i18n="footerMeta">Версия 1.0 · Обновлено 3 ноября 2026</span>
   </footer>
 
   <div class="easter-egg-toast" id="easterEggToast" role="status" aria-live="polite" hidden>
@@ -205,8 +559,7 @@
   <section class="notice-screen" id="noticeScreen" aria-labelledby="noticeTitle" aria-describedby="noticeMessage" hidden>
     <div class="notice-panel" role="dialog" aria-modal="true">
       <h2 id="noticeTitle">Важно!</h2>
-      <p class="notice-message" id="noticeMessage">Временно разработка сайта прекращена, за этот год скорее всего это последнее обновление.
-        Возможно, что в будущем сайт будет закрыт или изменен. Пожалуйста, используйте его с осторожностью и на свой страх и риск. С уважением, команда Osint-Tools.
+      <p class="notice-message" id="noticeMessage">Каталог находится в активной разработке и может содержать неактуальные ссылки и описания инструментов. Проверяйте источники самостоятельно. Используйте сервисы осторожно и на свой страх и риск. С уважением, команда OSINT Tools.
       </p>
       <button class="notice-close" id="noticeClose" type="button">Понятно</button>
     </div>
@@ -235,9 +588,43 @@
     </section>
   </div>
 
-  <script src="script.js?v=24"></script>
+  <noscript>
+    <style>
+      .loading-screen { display: none !important; }
+      .noscript-catalog { max-width: 1420px; margin: 0 auto; padding: 40px 20px 90px; }
+      .noscript-catalog h2 { margin: 0 0 12px; font-size: 24px; letter-spacing: -.03em; }
+      .noscript-catalog p { color: #a1a29a; line-height: 1.6; }
+      .noscript-catalog ul { columns: 2; padding: 0; margin: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 6px; }
+      .noscript-catalog li { margin: 0; }
+      .noscript-catalog a { color: #e7e7e3; }
+    </style>
+    <div class="noscript-catalog">
+      <h2>OSINT Tools — каталог инструментов OSINT</h2>
+      <p>Инструменты каталога OSINT открываются на сторонних ресурсах в новом окне браузера. Полный функционал сайта доступен с включённым JavaScript.</p>
+      <ul>
+        <li>Поиск и мониторинг</li>
+        <li>Люди и контакты</li>
+        <li>Соцсети и мессенджеры</li>
+        <li>Домены, сеть и угрозы</li>
+        <li>Гео и объекты</li>
+        <li>Медиа и файлы</li>
+        <li>Реестры и бизнес</li>
+        <li>Крипто и блокчейн</li>
+        <li>Рабочая среда</li>
+        <li>Искусственный интеллект</li>
+        <li>OPSEC и обучение</li>
+        <li>Код и репозитории</li>
+        <li>Дорки</li>
+        <li>Порты</li>
+        <li>Поиск людей</li>
+        <li>Веб-архивы</li>
+      </ul>
+    </div>
+  </noscript>
+
+  <script src="script.js?v=25"></script>
   <script>
-    const agreementScreen = document.getElementById("agreementScreen");
+    const agreementScreen = document.getElementById("agreement");
     const agreementCheckbox = document.getElementById("agreementCheckbox");
     const agreementAccept = document.getElementById("agreementAccept");
     const siteShell = document.getElementById("siteShell");
@@ -245,6 +632,22 @@
     const noticeClose = document.getElementById("noticeClose");
     const agreementVersion = "2026-10-26";
     const agreementStorageKey = "osint-agreement-version";
+    const noticeStorageKey = "osint-notice-seen";
+
+    const NOTICE_TEXT = {
+      ru: {
+        title: "Важно!",
+        message: "Каталог находится в активной разработке и может содержать неактуальные ссылки и описания инструментов. Проверяйте источники самостоятельно. Используйте сервисы осторожно и на свой страх и риск. С уважением, команда OSINT Tools.",
+        close: "Понятно"
+      },
+      en: {
+        title: "Important!",
+        message: "The catalog is under active development and may contain outdated links and tool descriptions. Check sources yourself. Use services carefully at your own risk. Respectfully, the OSINT Tools team.",
+        close: "OK"
+      }
+    };
+
+    const getNoticeText = () => NOTICE_TEXT[document.body.dataset.lang === "en" ? "en" : "ru"];
 
     const hasAcceptedAgreement = () => {
       try {
@@ -254,27 +657,94 @@
       }
     };
 
+    const shouldShowNotice = () => {
+      try {
+        return localStorage.getItem(noticeStorageKey) !== "1";
+      } catch {
+        return false;
+      }
+    };
+
+    const markNoticeShown = () => {
+      try {
+        localStorage.setItem(noticeStorageKey, "1");
+      } catch {}
+    };
+
+    const getNoticeFocusable = () => Array.from(
+      noticeScreen.querySelectorAll('button, input, [href], [tabindex]:not([tabindex="-1"])')
+    ).filter(element => element.offsetParent !== null || element === document.activeElement);
+
+    const handleNoticeKeydown = event => {
+      if (event.key !== "Tab") return;
+      const focusable = getNoticeFocusable();
+      if (focusable.length === 0) {
+        event.preventDefault();
+        noticeClose.focus();
+        return;
+      }
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      const active = document.activeElement;
+      const isOnFirst = active === first;
+      const isOnLast = active === last;
+      if (event.shiftKey) {
+        if (isOnFirst) {
+          event.preventDefault();
+          last.focus();
+        }
+      } else if (isOnLast) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    let noticeReturnFocus = null;
+
+    const openNotice = () => {
+      noticeReturnFocus = document.activeElement;
+      noticeScreen.hidden = false;
+      document.body.classList.add("notice-open");
+      siteShell.inert = true;
+      siteShell.setAttribute("aria-hidden", "true");
+      const text = getNoticeText();
+      document.getElementById("noticeTitle").textContent = text.title;
+      document.getElementById("noticeMessage").textContent = text.message;
+      noticeClose.textContent = text.close;
+      noticeClose.focus();
+    };
+
+    const closeNotice = () => {
+      noticeScreen.hidden = true;
+      document.body.classList.remove("notice-open");
+      siteShell.inert = false;
+      siteShell.removeAttribute("aria-hidden");
+      const returnFocus = noticeReturnFocus;
+      noticeReturnFocus = null;
+      if (returnFocus instanceof HTMLElement && returnFocus.isConnected) returnFocus.focus();
+    };
+
     const closeAgreementScreen = () => {
       agreementScreen.hidden = true;
       siteShell.inert = false;
       siteShell.removeAttribute("aria-hidden");
       document.body.classList.remove("agreement-required");
-      noticeScreen.hidden = false;
-      document.body.classList.add("notice-open");
-      noticeClose.focus();
+      if (shouldShowNotice()) {
+        markNoticeShown();
+        openNotice();
+      }
     };
 
-    const closeNoticeScreen = () => {
-      noticeScreen.hidden = true;
-      document.body.classList.remove("notice-open");
-    };
-
-    noticeClose.addEventListener("click", closeNoticeScreen);
+    noticeClose.addEventListener("click", closeNotice);
     noticeScreen.addEventListener("click", event => {
-      if (event.target === noticeScreen) closeNoticeScreen();
+      if (event.target === noticeScreen) closeNotice();
     });
+    noticeScreen.addEventListener("keydown", handleNoticeKeydown);
     document.addEventListener("keydown", event => {
-      if (event.key === "Escape" && !noticeScreen.hidden) closeNoticeScreen();
+      if (event.key === "Escape" && !noticeScreen.hidden) {
+        event.preventDefault();
+        closeNotice();
+      }
     });
 
     const resetAgreementConfirmation = () => {

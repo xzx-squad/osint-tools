@@ -1,0 +1,21 @@
+{
+  "name": "OSINT Tools",
+  "short_name": "OSINT Tools",
+  "description": "Каталог инструментов OSINT для поиска и анализа открытых источников.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#171716",
+  "theme_color": "#171716",
+  "icons": [
+    {
+      "src": "favicon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}
