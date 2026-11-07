@@ -549,13 +549,9 @@ body.light .brand-mark {
   gap: 25px;
   border: 1px solid var(--line);
   border-radius: 20px;
-  background:
-    linear-gradient(90deg, rgba(10, 14, 12, .92) 0%, rgba(10, 14, 12, .74) 55%, rgba(10, 14, 12, .36) 100%),
-    image-set(
-      url("fon.webp") type("image/webp") 1600w,
-      url("fon.jpg") type("image/jpeg") 1600w
-    ),
-    var(--panel);
+  background-image: linear-gradient(90deg, rgba(10, 14, 12, .92) 0%, rgba(10, 14, 12, .74) 55%, rgba(10, 14, 12, .36) 100%),
+    url("fon.jpg");
+  background-color: var(--panel);
   background-position: center 48%;
   background-size: cover;
   box-shadow: var(--shadow);
@@ -1480,13 +1476,9 @@ body.light .search {
 }
 
 body.light .hero {
-  background:
-    linear-gradient(90deg, rgba(10, 14, 12, .92) 0%, rgba(10, 14, 12, .74) 55%, rgba(10, 14, 12, .36) 100%),
-    image-set(
-      url("fon.webp") type("image/webp") 1600w,
-      url("fon.jpg") type("image/jpeg") 1600w
-    ),
-    var(--panel);
+  background-image: linear-gradient(90deg, rgba(10, 14, 12, .92) 0%, rgba(10, 14, 12, .74) 55%, rgba(10, 14, 12, .36) 100%),
+    url("fon.jpg");
+  background-color: var(--panel);
   background-position: center 48%;
   background-size: cover;
 }

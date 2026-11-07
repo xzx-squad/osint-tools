@@ -1545,6 +1545,27 @@ function renderOsintGameRound() {
   updateOsintGameScore();
 }
 
+function isAnyOverlayOpen() {
+  const agreementScreen = document.getElementById("agreement");
+  const noticeScreen = document.getElementById("noticeScreen");
+  const osintGameScreen = document.getElementById("osintGameScreen");
+  const toastOpen = easterEggToast && !easterEggToast.hidden && easterEggToast.classList.contains("is-visible");
+  return Boolean(
+    (agreementScreen && !agreementScreen.hidden) ||
+    (noticeScreen && !noticeScreen.hidden) ||
+    (osintGameScreen && !osintGameScreen.hidden) ||
+    toastOpen
+  );
+}
+
+function releaseBackgroundLockIfIdle() {
+  if (isAnyOverlayOpen()) return;
+  const shell = document.getElementById("siteShell");
+  if (!shell) return;
+  shell.inert = false;
+  shell.removeAttribute("aria-hidden");
+}
+
 function openOsintGame() {
   const siteShell = document.getElementById("siteShell");
   osintGameReturnFocus = document.activeElement;
@@ -1562,11 +1583,9 @@ function openOsintGame() {
 }
 
 function closeOsintGame() {
-  const siteShell = document.getElementById("siteShell");
   osintGameScreen.hidden = true;
   document.body.classList.remove("game-open");
-  siteShell.inert = false;
-  siteShell.removeAttribute("aria-hidden");
+  releaseBackgroundLockIfIdle();
 
   if (osintGameReturnFocus instanceof HTMLElement && osintGameReturnFocus !== document.body && osintGameReturnFocus.isConnected) {
     osintGameReturnFocus.focus();
@@ -1769,8 +1788,7 @@ let easterEggReturnFocus = null;
 function closeEasterEggWarning() {
   easterEggToast.classList.remove("is-warning", "is-visible");
   document.body.classList.remove("easter-egg-warning-open");
-  const shell = document.getElementById("siteShell");
-  if (shell) shell.inert = false;
+  releaseBackgroundLockIfIdle();
   easterEggToast.removeAttribute("aria-modal");
   easterEggToast.setAttribute("role", "status");
   easterEggToast.setAttribute("aria-live", "polite");
@@ -1827,8 +1845,8 @@ function showEasterEgg(type) {
   if (isWarning) {
     easterEggReturnFocus = document.activeElement;
     document.body.classList.add("easter-egg-warning-open");
-    const shell = document.getElementById("siteShell");
-    if (shell) shell.inert = true;
+    // The warning is rendered as a fixed dialog inside #siteShell, so the shell itself must
+    // not be locked with `inert` here - otherwise the dialog's own close button would be inert too.
     easterEggToast.setAttribute("role", "alertdialog");
     easterEggToast.setAttribute("aria-modal", "true");
     easterEggToast.setAttribute("aria-labelledby", "easterEggTitle");

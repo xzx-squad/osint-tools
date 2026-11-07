@@ -357,7 +357,7 @@
       ]
     }
   </script>
-  <link rel="stylesheet" href="style.css?v=6">
+  <link rel="stylesheet" href="style.css?v=8">
 </head>
 <body>
   <a class="skip-link" href="#catalog">Перейти к каталогу</a>
@@ -622,7 +622,7 @@
     </div>
   </noscript>
 
-  <script src="script.js?v=25"></script>
+  <script src="script.js?v=26"></script>
   <script>
     const agreementScreen = document.getElementById("agreement");
     const agreementCheckbox = document.getElementById("agreementCheckbox");
@@ -655,6 +655,19 @@
       } catch {
         return false;
       }
+    };
+
+    const isAnyDialogOpen = () => Boolean(
+      (agreementScreen && !agreementScreen.hidden) ||
+      (noticeScreen && !noticeScreen.hidden) ||
+      (document.getElementById("osintGameScreen") && !document.getElementById("osintGameScreen").hidden) ||
+      (document.getElementById("easterEggToast") && !document.getElementById("easterEggToast").hidden && document.getElementById("easterEggToast").classList.contains("is-visible"))
+    );
+
+    const releaseSiteShellLock = () => {
+      if (isAnyDialogOpen()) return;
+      siteShell.inert = false;
+      siteShell.removeAttribute("aria-hidden");
     };
 
     const shouldShowNotice = () => {
@@ -717,18 +730,21 @@
     const closeNotice = () => {
       noticeScreen.hidden = true;
       document.body.classList.remove("notice-open");
-      siteShell.inert = false;
-      siteShell.removeAttribute("aria-hidden");
+      releaseSiteShellLock();
       const returnFocus = noticeReturnFocus;
       noticeReturnFocus = null;
       if (returnFocus instanceof HTMLElement && returnFocus.isConnected) returnFocus.focus();
     };
 
+    let agreementReturnFocus = null;
+
     const closeAgreementScreen = () => {
       agreementScreen.hidden = true;
-      siteShell.inert = false;
-      siteShell.removeAttribute("aria-hidden");
       document.body.classList.remove("agreement-required");
+      releaseSiteShellLock();
+      const returnFocus = agreementReturnFocus;
+      agreementReturnFocus = null;
+      if (returnFocus instanceof HTMLElement && returnFocus.isConnected) returnFocus.focus();
       if (shouldShowNotice()) {
         markNoticeShown();
         openNotice();
@@ -760,6 +776,7 @@
 
       agreementCheckbox.checked = false;
       agreementAccept.disabled = true;
+      agreementReturnFocus = document.activeElement;
       siteShell.inert = true;
       siteShell.setAttribute("aria-hidden", "true");
       document.body.classList.add("agreement-required");
